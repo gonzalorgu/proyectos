@@ -1,0 +1,89 @@
+<div class="usuario-form-container">
+    <div class="form-header">
+      <h3>{{ isEditMode ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
+      <button class="close-btn" (click)="onCancel()" type="button">✕</button>
+    </div>
+  
+    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+      <div class="form-body">
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre completo *</label>
+          <input 
+            type="text" 
+            id="nombre" 
+            formControlName="nombre" 
+            class="form-control"
+            [class.is-invalid]="f['nombre'].invalid && f['nombre'].touched"
+            placeholder="Ej: Juan Pérez">
+          <div *ngIf="f['nombre'].invalid && f['nombre'].touched" class="error-message">
+            <span *ngIf="f['nombre'].errors?.['required']">El nombre es requerido</span>
+            <span *ngIf="f['nombre'].errors?.['minlength']">Mínimo 3 caracteres</span>
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Correo electrónico *</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control"
+            [class.is-invalid]="f['email'].invalid && f['email'].touched"
+            placeholder="ejemplo@correo.com">
+          <div *ngIf="f['email'].invalid && f['email'].touched" class="error-message">
+            <span *ngIf="f['email'].errors?.['required']">El email es requerido</span>
+            <span *ngIf="f['email'].errors?.['email']">Email inválido</span>
+          </div>
+        </div>
+  
+        <!-- Teléfono -->
+        <div class="form-group">
+          <label for="telefono">Teléfono (opcional)</label>
+          <input 
+            type="tel" 
+            id="telefono" 
+            formControlName="telefono" 
+            class="form-control"
+            [class.is-invalid]="f['telefono'].invalid && f['telefono'].touched"
+            placeholder="5551234567"
+            maxlength="10">
+          <div *ngIf="f['telefono'].invalid && f['telefono'].touched" class="error-message">
+            <span *ngIf="f['telefono'].errors?.['pattern']">Debe ser 10 dígitos</span>
+          </div>
+        </div>
+  
+        <!-- Rol -->
+        <div class="form-group">
+          <label for="rol">Rol *</label>
+          <select id="rol" formControlName="rol" class="form-control">
+            <option *ngFor="let rol of roles" [value]="rol.value">
+              {{ rol.label }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Estado activo -->
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="activo">
+            <span>Usuario activo</span>
+          </label>
+          <small class="help-text">
+            Los usuarios inactivos no podrán acceder al sistema
+          </small>
+        </div>
+      </div>
+  
+      <!-- Botones de acción -->
+      <div class="form-footer">
+        <button type="button" (click)="onCancel()" class="btn btn-secondary">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="!usuarioForm.valid" class="btn btn-primary">
+          {{ isEditMode ? 'Actualizar' : 'Crear Usuario' }}
+        </button>
+      </div>
+    </form>
+  </div>

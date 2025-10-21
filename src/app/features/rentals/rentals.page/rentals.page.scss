@@ -1,0 +1,140 @@
+:host{
+    display: block;
+    padding-top: 100px;
+  }
+
+.wrap { 
+    max-width: 1400px; 
+    margin: 1.4rem auto 2rem; 
+    padding: 0 1rem; 
+  }
+  
+  .title { 
+    font-weight: 800; 
+    margin: 0 0 .8rem; 
+    font-size: 1.6rem; 
+  }
+  
+  /* Filtros: búsqueda y select a la izquierda, botones a la derecha */
+  .filters { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    gap: .8rem; 
+    margin-bottom: 1rem; 
+  }
+  
+  /* Contenedor izquierdo: input y select juntos */
+  .filters-left {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+  
+  .pill-input, 
+  .pill-select { 
+    padding: .55rem .9rem; 
+    border: 1px solid #ddd; 
+    border-radius: 999px; 
+    background: #fff;
+    font-size: .95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  
+    &:focus {
+      border-color: #333;
+    }
+  }
+  
+  .pill-input {
+    /* ✅ Sin flex: 1, mantiene tamaño natural del placeholder */
+    min-width: 200px;
+  }
+  
+  .pill-select {
+    min-width: 120px;
+    cursor: pointer;
+  }
+  
+  /* Botones de rango a la derecha */
+  .filters-right { 
+    display: flex; 
+    gap: .5rem; 
+  }
+  
+  .pill-btn { 
+    padding: .5rem .9rem; 
+    border: 1px solid #ddd; 
+    background: #fff; 
+    border-radius: 999px; 
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  
+    &:hover {
+      background: #f5f5f5;
+      border-color: #333;
+    }
+  
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+  
+  .block { 
+    margin-top: 1rem; 
+  }
+  
+  .section-title { 
+    font-size: 1.15rem; 
+    font-weight: 800; 
+    margin: .2rem 0 .6rem; 
+  }
+  
+  .empty { 
+    color: #666; 
+    margin: .2rem 0 1rem; 
+  }
+  
+  .grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 1rem; 
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) { 
+    .grid { 
+      grid-template-columns: 1fr; 
+    }
+    
+    .filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .filters-left {
+      width: 100%;
+    }
+    
+    .filters-right {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .filters-left {
+      flex-direction: column;
+    }
+    
+    .pill-input,
+    .pill-select {
+      width: 100%;
+    }
+    
+    .pill-btn {
+      flex: 1;
+    }
+  }

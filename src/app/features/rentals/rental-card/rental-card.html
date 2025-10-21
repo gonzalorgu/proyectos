@@ -1,0 +1,48 @@
+@if (r) {
+  <article class="card">
+    <div class="imgwrap">
+      <img [src]="r.foto || '../../../../assets/2.jpg'" [alt]="r.dressNombre" />
+    </div>
+
+    <div class="content">
+      <header class="head">
+        <h3 class="name">{{ r.dressNombre }}</h3>
+        <span class="badge" [class.active]="r.estado === 'activo'">
+          {{ r.estado === 'activo' ? 'ACTIVO' : 'PASADO' }}
+        </span>
+      </header>
+
+      <!-- ✅ Orden actualizado: Recogida, Talla, Devolución, Precio -->
+      <div class="info-grid">
+        <!-- Recogida -->
+        <div class="info-item">
+          <dt>Recogida</dt>
+          <dd>{{ r.desde | date:'MMM dd, y' }}</dd>
+        </div>
+
+        <!-- ✅ Talla primero -->
+        <div class="info-item">
+          <dt>Talla</dt>
+          <dd>{{ r.talla || '—' }}</dd>
+        </div>
+
+        <!-- Devolución -->
+        <div class="info-item">
+          <dt>Devolución</dt>
+          <dd>{{ r.hasta | date:'MMM dd, y' }}</dd>
+        </div>
+
+        <!-- ✅ Precio después -->
+        <div class="info-item">
+          <dt>Precio</dt>
+          <dd>S/ {{ r.precioAlquiler }}</dd>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="btn primary" routerLink="/mis-alquileres">Volver a reservar</a>
+        <a class="btn" [routerLink]="['/vestido', r.dressId]">Ver detalle</a>
+      </div>
+    </div>
+  </article>
+}

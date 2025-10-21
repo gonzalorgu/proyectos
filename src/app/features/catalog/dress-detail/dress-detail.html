@@ -1,0 +1,121 @@
+<section class="wrap">
+  @if (dress()) {
+    <div class="top">
+      <!-- ✅ Sección de imágenes con galería de miniaturas -->
+      <div class="image-section">
+        <!-- Miniaturas a la izquierda -->
+        <div class="thumbnails">
+          @for (foto of dress()!.fotos; track $index) {
+            <button 
+              type="button"
+              class="thumbnail"
+              [class.active]="selectedPhotoIndex() === $index"
+              (click)="selectPhoto($index)">
+              <img [src]="foto" [alt]="dress()!.nombre + ' - foto ' + ($index + 5)" />
+            </button>
+          }
+        </div>
+
+        <!-- Imagen principal -->
+        <figure class="media">
+          <img [src]="dress()!.fotos[selectedPhotoIndex()] || 'assets/placeholder.jpg'"
+               [alt]="dress()!.nombre" />
+          <!-- ✅ Botón de zoom (opcional) -->
+          <button type="button" class="zoom-btn" aria-label="Ver en tamaño completo">
+            <i class="fas fa-search-plus"></i>
+          </button>
+        </figure>
+      </div>
+
+      <!-- Info a la derecha -->
+      <div class="info">
+        <h1 class="title">{{ dress()!.nombre }}</h1>
+
+        <p class="desc">
+          Cautiva con un diseño elegante y un delicado corte ceñido que realza
+          tu silueta. Ideal para noches especiales y eventos formales.
+        </p>
+        <p class="desc">
+          El corte en cintura y capas de gasa añaden un sutil balance; su
+          tejido permite total libertad de movimiento y comodidad. Un diseño
+          versátil que lucirá impecable en fotos y en persona.
+        </p>
+
+        <ul class="bullets">
+          <li>Material: tul, forro interior</li>
+          <li>Incluye: botón y lazo</li>
+          <li>Categoría: {{ dress()!.categoria }}</li>
+        </ul>
+
+        <!-- Toggle de Venta/Alquiler -->
+        <div class="purchase-type">
+          <span class="label-inline">¿Cómo deseas adquirirlo?</span>
+          <div class="toggle-buttons">
+            <button 
+              type="button"
+              class="toggle-btn"
+              [class.active]="purchaseType() === 'venta'"
+              (click)="setPurchaseType('venta')">
+              Venta
+            </button>
+            <button 
+              type="button"
+              class="toggle-btn"
+              [class.active]="purchaseType() === 'alquiler'"
+              (click)="setPurchaseType('alquiler')">
+              Alquiler
+            </button>
+          </div>
+        </div>
+
+        <!-- Precio dinámico -->
+        <div class="price">
+          <span class="amount">S/ {{ currentPrice() }}</span>
+          <span class="vat">Impuestos incluidos</span>
+        </div>
+
+        <div class="block">
+          <label class="label">Tallas</label>
+          <div class="sizes">
+            @for (t of dress()!.talla; track t) {
+              <button type="button"
+                      class="size"
+                      [class.active]="t === size()"
+                      (click)="setSize(t)">{{ t }}</button>
+            }
+          </div>
+        </div>
+
+        <div class="cta">
+          <button class="btn primary" (click)="addToCart()">Agregar al carrito</button>
+          <button class="btn" (click)="openReservation()">
+            {{ actionButtonText() }}
+          </button>
+        </div>
+    </div>
+  </div>
+
+
+    <!-- Relacionados -->
+    <section class="related">
+      <h2>También te puede interesar</h2>
+      <div class="grid">
+        @for (r of related(); track r.id) {
+          <app-dress-card [dress]="r" />
+        }
+      </div>
+    </section>
+  } @else {
+    <div class="empty">
+      <p>Vestido no encontrado.</p>
+      <a class="btn" routerLink="/catalogo">Volver al catálogo</a>
+    </div>
+  }
+</section>
+<app-reservation-dialog 
+  [(isOpen)]="modalOpen"
+  [dressData]="selectedDressForReservation()"
+  [purchaseType]="purchaseType()"
+  (onConfirm)="handleReservation($event)"
+  (onCancel)="handleCancel()">
+</app-reservation-dialog>

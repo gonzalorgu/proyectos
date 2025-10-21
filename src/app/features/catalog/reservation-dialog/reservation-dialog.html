@@ -1,0 +1,65 @@
+@if (isOpen()) {
+  <div class="modal-overlay open" (click)="closeModal()">
+    <div class="modal-container open" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <!-- ✅ Título dinámico -->
+        <h3 class="modal-title">{{ modalTitle() }}</h3>
+        <button class="close-btn" (click)="closeModal()" type="button" aria-label="Cerrar">×</button>
+      </div>
+
+      @if (dressData(); as dress) {
+        <div class="dress-info">
+          <h3 class="dress-name">{{ dress.name }}</h3>
+          <p class="dress-price">S/ {{ dress.price }} <span>{{ purchaseType() === 'alquiler' ? 'por día' : 'precio final' }}</span></p>
+        </div>
+      }
+
+      <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="reservation-form">
+        <div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fechaInicio">Fecha de Inicio *</label>
+              <input type="date" id="fechaInicio" class="form-control" formControlName="fechaInicio" [min]="minDate" [class.error]="hasError('fechaInicio')">
+              @if (hasError('fechaInicio')) { <span class="error-message">{{ getErrorMessage('fechaInicio') }}</span> }
+            </div>
+
+            <div class="form-group">
+              <label for="fechaFin">Fecha de Fin *</label>
+              <input type="date" id="fechaFin" class="form-control" formControlName="fechaFin" [min]="minDate" [class.error]="hasError('fechaFin')">
+              @if (hasError('fechaFin')) { <span class="error-message">{{ getErrorMessage('fechaFin') }}</span> }
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nombre">Nombre Completo *</label>
+            <input type="text" id="nombre" class="form-control" formControlName="nombre" placeholder="Ej: María González" [class.error]="hasError('nombre')">
+            @if (hasError('nombre')) { <span class="error-message">{{ getErrorMessage('nombre') }}</span> }
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono *</label>
+            <input type="tel" id="telefono" class="form-control" formControlName="telefono" placeholder="999999999" maxlength="9" [class.error]="hasError('telefono')">
+            @if (hasError('telefono')) { <span class="error-message">{{ getErrorMessage('telefono') }}</span> }
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" class="form-control" formControlName="email" placeholder="correo@ejemplo.com" [class.error]="hasError('email')">
+            @if (hasError('email')) { <span class="error-message">{{ getErrorMessage('email') }}</span> }
+          </div>
+
+          <div class="form-group">
+            <label for="comentarios">Comentarios (opcional)</label>
+            <textarea id="comentarios" class="form-control" formControlName="comentarios" rows="3" placeholder="Información adicional..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <!-- ✅ Botón dinámico -->
+          <button type="submit" class="btn btn-primary" [disabled]="!reservationForm.valid">{{ confirmButtonText() }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

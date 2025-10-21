@@ -1,0 +1,104 @@
+<section class="wrap">
+    <h1 class="title">Mi Perfil</h1>
+  
+    <!-- Tarjeta: Avatar + Preferencia -->
+    <section class="card">
+      <div class="avatarBox">
+        <div class="avatar">
+          @if (store.profile().avatarUrl) {
+            <img [src]="store.profile().avatarUrl!" alt="Foto de perfil" />
+          } @else {
+            <div class="placeholder">EZ</div>
+          }
+        </div>
+  
+        <label class="btn ghost">
+          Cambiar foto
+          <input type="file" accept="image/*" (change)="onPickAvatar($event)" hidden />
+        </label>
+  
+        @if (store.profile().avatarUrl) {
+          <button class="btn link" type="button" (click)="limpiarAvatar()">Quitar</button>
+        }
+      </div>
+  
+      <div class="prefs">
+        <span class="label">Preferencia</span>
+        <div class="segmented">
+          @for (t of tallas; track t) {
+            <button
+              type="button"
+              class="segment"
+              [class.active]="store.profile().tallaPref === t"
+              (click)="onTalla(t)"
+            >
+              {{ t }}
+            </button>
+          }
+        </div>
+      </div>
+    </section>
+  
+    <!-- Tarjeta: Datos personales -->
+    <section class="card">
+      <h2 class="card-title">Datos Personales</h2>
+  
+      <div class="grid2">
+        <label class="field">
+          <span>Nombre</span>
+          <input type="text" [value]="store.profile().nombre" (input)="onNombre($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Apellidos</span>
+          <input type="text" [value]="store.profile().apellidos" (input)="onApellidos($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Correo</span>
+          <input type="email" [value]="store.profile().email" (input)="onEmail($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Teléfono</span>
+          <input type="tel" [value]="store.profile().telefono" (input)="onTelefono($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Documento</span>
+          <input type="text" [value]="store.profile().documento" (input)="onDocumento($event)" />
+        </label>
+      </div>
+  
+      <div class="actions">
+        <button class="btn primary" type="button" (click)="guardarDatos()">Guardar cambios</button>
+      </div>
+    </section>
+  
+    <!-- Tarjeta: Cambiar contraseña -->
+    <section class="card">
+      <h2 class="card-title">Cambiar Contraseña</h2>
+  
+      <div class="grid3">
+        <label class="field">
+          <span>Actual</span>
+          <input type="password" [value]="passActual()" (input)="onPassActual($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Nueva</span>
+          <input type="password" [value]="passNueva()" (input)="onPassNueva($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Repite</span>
+          <input type="password" [value]="passRepite()" (input)="onPassRepite($event)" />
+        </label>
+      </div>
+  
+      <div class="actions">
+        <button class="btn primary" type="button" (click)="guardarPassword()">Actualizar contraseña</button>
+      </div>
+    </section>
+  </section>
+  

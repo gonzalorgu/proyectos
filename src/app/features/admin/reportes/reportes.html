@@ -1,0 +1,166 @@
+<div class="reporte-container">
+  <!-- Botón de imprimir -->
+  <div class="print-actions no-print">
+    <button class="btn-print" (click)="imprimirReporte()">
+      <img src="../../../../assets/icons/print-svgrepo-com.svg" alt="Imprimir" />
+    </button>
+  </div>
+
+  <!-- ✅ Cambiar <header> a <div> para evitar conflicto -->
+  <div class="reporte-header">
+    <div class="company-info">
+      <h1>ERMA ZAFE</h1>
+      <p>Alquiler de Vestidos</p>
+    </div>
+    <div class="reporte-info">
+      <h2>Reporte Mensual</h2>
+      <p>Fecha de generación: {{ fechaGeneracion | date:'dd/MM/yyyy HH:mm' }}</p>
+      <p>Período: Enero - Octubre 2025</p>
+    </div>
+  </div>
+
+  <section class="resumen-ejecutivo">
+    <h3>Resumen Ejecutivo</h3>
+    <div class="resumen-grid">
+      <div class="resumen-card">
+        <div class="card-label">Total de Alquileres</div>
+        <div class="card-value">{{ totalAlquileres }}</div>
+        <div class="card-desc">Últimos 10 meses</div>
+      </div>
+      <div class="resumen-card">
+        <div class="card-label">Ingresos Totales</div>
+        <div class="card-value">{{ totalIngresos.toLocaleString() }}</div>
+        <div class="card-desc">PENS</div>
+      </div>
+      <div class="resumen-card">
+        <div class="card-label">Promedio Mensual</div>
+        <div class="card-value">{{ promedioAlquileres.toFixed(1) }}</div>
+        <div class="card-desc">Alquileres por mes</div>
+      </div>
+      <div class="resumen-card">
+        <div class="card-label">Ingreso Promedio</div>
+        <div class="card-value">{{ promedioIngresos.toFixed(0) }}</div>
+        <div class="card-desc">Por mes</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tabla-section">
+    <h3>Detalle de Alquileres por Mes</h3>
+    <table class="reporte-table">
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th>Cantidad de Alquileres</th>
+          <th>Ingresos (PEN)</th>
+          <th>Precio Promedio</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of reporteMensual(); track r.mes) {
+          <tr>
+            <td>{{ r.mes }}</td>
+            <td class="text-center">{{ r.cantidad }}</td>
+            <td class="text-right">${{ r.ingresos.toLocaleString() }}</td>
+            <td class="text-right">${{ (r.ingresos / r.cantidad).toFixed(2) }}</td>
+          </tr>
+        }
+        <tr class="total-row">
+          <td><strong>TOTAL</strong></td>
+          <td class="text-center"><strong>{{ totalAlquileres }}</strong></td>
+          <td class="text-right"><strong>${{ totalIngresos.toLocaleString() }}</strong></td>
+          <td class="text-right"><strong>${{ (totalIngresos / totalAlquileres).toFixed(2) }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="graficos-section">
+    <div class="grafico-container">
+      <h3>Evolución de Alquileres</h3>
+      <div class="bar-chart">
+        @for (r of reporteMensual(); track r.mes) {
+          <div class="bar-wrapper">
+            <div class="bar-container">
+              <div 
+                class="bar alquileres" 
+                [style.height]="getBarHeight(r.cantidad, getMaxAlquileres())">
+                <span class="bar-value">{{ r.cantidad }}</span>
+              </div>
+            </div>
+            <span class="bar-label">{{ r.mes.substring(0, 3) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="grafico-container">
+      <h3>Evolución de Ingresos</h3>
+      <div class="bar-chart">
+        @for (r of reporteMensual(); track r.mes) {
+          <div class="bar-wrapper">
+            <div class="bar-container">
+              <div 
+                class="bar ingresos" 
+                [style.height]="getBarHeight(r.ingresos, getMaxIngresos())">
+                <span class="bar-value">${{ (r.ingresos / 1000).toFixed(1) }}k</span>
+              </div>
+            </div>
+            <span class="bar-label">{{ r.mes.substring(0, 3) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="populares-section">
+    <h3>Top 5 Vestidos Más Alquilados</h3>
+    <table class="reporte-table">
+      <thead>
+        <tr>
+          <th>Posición</th>
+          <th>Nombre del Vestido</th>
+          <th>Cantidad de Alquileres</th>
+          <th>Porcentaje</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (v of vestidosPopulares(); track v.nombre; let i = $index) {
+          <tr>
+            <td class="text-center"><strong>{{ i + 1 }}</strong></td>
+            <td>{{ v.nombre }}</td>
+            <td class="text-center">{{ v.alquileres }}</td>
+            <td class="text-right">{{ ((v.alquileres / totalAlquileres) * 100).toFixed(1) }}%</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="analisis-section">
+    <h3>Análisis y Conclusiones</h3>
+    <div class="analisis-content">
+      <div class="analisis-item">
+        <h4>
+          <img src="../../../../assets/icons/graphic-on-screen-svgrepo-com.svg" alt="Tendencia" />
+          Tendencia de Alquileres
+        </h4>
+        <p>Se observa un crecimiento sostenido en los meses de Mayo a Julio, alcanzando un pico de <strong>30 alquileres</strong> en Julio. Esto coincide con la temporada alta de eventos sociales.</p>
+      </div>
+      <div class="analisis-item">
+        <h4>
+          <img src="../../../../assets/icons/money-bag-svgrepo-com.svg" alt="Ingresos" />
+          Comportamiento de Ingresos
+        </h4>
+        <p>Los ingresos mensuales promedio son de <strong>${{ promedioIngresos.toFixed(0) }}</strong>, con un máximo de <strong>$4,200</strong> en Julio. El precio promedio por alquiler se mantiene en <strong>${{ (totalIngresos / totalAlquileres).toFixed(2) }}</strong>.</p>
+      </div>
+      <div class="analisis-item">
+        <h4>
+          <img src="../../../../assets/icons/trophy-svgrepo-com.svg" alt="Productos" />
+          Productos Destacados
+        </h4>
+        <p>El "Vestido de Noche Elegante" lidera con <strong>45 alquileres</strong>, representando el {{ ((45 / totalAlquileres) * 100).toFixed(1) }}% del total. Los 5 vestidos más populares concentran el {{ getPorcentajeVestidosPopulares() }}% de los alquileres.</p>
+      </div>
+    </div>
+  </section>
+</div>

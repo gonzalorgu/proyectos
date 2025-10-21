@@ -1,0 +1,127 @@
+<div class="alquiler-form-container">
+    <div class="form-header">
+      <h3>{{ isEditMode ? 'Editar Alquiler' : 'Nuevo Alquiler' }}</h3>
+      <button class="close-btn" (click)="onCancel()" type="button">✕</button>
+    </div>
+  
+    <form [formGroup]="alquilerForm" (ngSubmit)="onSubmit()">
+      <div class="form-body">
+        <div class="form-row">
+          <!-- Cliente -->
+          <div class="form-group">
+            <label for="cliente">Cliente *</label>
+            <select 
+              id="cliente" 
+              formControlName="cliente" 
+              class="form-control"
+              [class.is-invalid]="f['cliente'].invalid && f['cliente'].touched">
+              <option value="">Seleccionar cliente</option>
+              <option *ngFor="let cliente of clientes" [value]="cliente.nombre">
+                {{ cliente.nombre }}
+              </option>
+            </select>
+            <div *ngIf="f['cliente'].invalid && f['cliente'].touched" class="error-message">
+              Selecciona un cliente
+            </div>
+          </div>
+  
+          <!-- Vestido -->
+          <div class="form-group">
+            <label for="vestido">Vestido *</label>
+            <select 
+              id="vestido" 
+              formControlName="vestido" 
+              class="form-control"
+              [class.is-invalid]="f['vestido'].invalid && f['vestido'].touched"
+              (change)="onVestidoChange($any($event.target).value)">
+              <option value="">Seleccionar vestido</option>
+              <option *ngFor="let vestido of vestidos" [value]="vestido.nombre">
+                {{ vestido.nombre }} - ${{ vestido.precio }}
+              </option>
+            </select>
+            <div *ngIf="f['vestido'].invalid && f['vestido'].touched" class="error-message">
+              Selecciona un vestido
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <!-- Fecha desde -->
+          <div class="form-group">
+            <label for="desde">Fecha de inicio *</label>
+            <input 
+              type="date" 
+              id="desde" 
+              formControlName="desde" 
+              class="form-control"
+              [class.is-invalid]="f['desde'].invalid && f['desde'].touched">
+            <div *ngIf="f['desde'].invalid && f['desde'].touched" class="error-message">
+              La fecha de inicio es requerida
+            </div>
+          </div>
+  
+          <!-- Fecha hasta -->
+          <div class="form-group">
+            <label for="hasta">Fecha de devolución *</label>
+            <input 
+              type="date" 
+              id="hasta" 
+              formControlName="hasta" 
+              class="form-control"
+              [class.is-invalid]="f['hasta'].invalid && f['hasta'].touched">
+            <div *ngIf="f['hasta'].invalid && f['hasta'].touched" class="error-message">
+              La fecha de devolución es requerida
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <!-- Precio -->
+          <div class="form-group">
+            <label for="precio">Precio total *</label>
+            <input 
+              type="number" 
+              id="precio" 
+              formControlName="precio" 
+              class="form-control"
+              [class.is-invalid]="f['precio'].invalid && f['precio'].touched"
+              placeholder="0.00"
+              step="0.01">
+            <div *ngIf="f['precio'].invalid && f['precio'].touched" class="error-message">
+              El precio debe ser mayor a 0
+            </div>
+          </div>
+  
+          <!-- Estado -->
+          <div class="form-group">
+            <label for="estado">Estado *</label>
+            <select id="estado" formControlName="estado" class="form-control">
+              <option *ngFor="let estado of estados" [value]="estado.value">
+                {{ estado.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Notas -->
+        <div class="form-group">
+          <label for="notas">Notas adicionales</label>
+          <textarea 
+            id="notas" 
+            formControlName="notas" 
+            class="form-control" 
+            rows="3"
+            placeholder="Instrucciones especiales, comentarios..."></textarea>
+        </div>
+      </div>
+  
+      <div class="form-footer">
+        <button type="button" (click)="onCancel()" class="btn btn-secondary">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="!alquilerForm.valid" class="btn btn-primary">
+          {{ isEditMode ? 'Actualizar' : 'Crear Alquiler' }}
+        </button>
+      </div>
+    </form>
+  </div>

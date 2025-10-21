@@ -1,0 +1,35 @@
+.cta-section {
+    max-width: 1000px;
+    margin: 4rem auto 3rem;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .cta-section p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1.4rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  .btn-cta {
+    display: inline-block;
+    padding: .75rem 1.4rem;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid #111;
+    box-shadow: 0 6px 16px rgba(0,0,0,.15);
+    transition: background .2s ease;
+  }
+  .btn-cta:hover {
+    background: #333;
+  }

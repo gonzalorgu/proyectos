@@ -1,0 +1,88 @@
+
+:host{
+  display: block;
+  padding-top: 90px;
+}
+
+
+
+.auth-wrap {
+    min-height:400px ;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding-top: 2.5rem; background: #f8faf9;
+  }
+  
+  .card {
+    width:320px; min-height: 280px;
+    background: #fff; border: 1px solid #e6efea; border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.06);
+    padding: 2rem 1.4rem; display: flex; flex-direction: column;
+  }
+  
+  /* Logo (texto a la izquierda, imagen a la derecha) */
+  .logo {
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: row-reverse; gap: .8rem; margin-bottom: 1rem; text-align: left;
+  }
+  .brand-icon { width: 60px; height: 60px; object-fit: contain; border-radius: 10px; }
+  .brand-text { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; }
+  .brand-script { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: #111; }
+  .brand-text small { color: #4f5b57; font-size: .8rem; }
+  
+  .title { text-align: center; margin: .5rem 0 .2rem; font-size: .95rem; color: #333; }
+  .subtitle { text-align: center; margin: 0 0 1rem; color: #555; font-size: .85rem; }
+  
+  .field { display: flex; flex-direction: column; gap: .25rem; margin-bottom: .8rem; }
+  .field span { color: #4c4c4c; font-size: .85rem; }
+  .field input {
+    width: 280px; padding: .6rem .85rem; border-radius: 999px;
+    border: 1px solid #dfe7e3; background: #fff; outline: none; font-size: .9rem;
+  }
+  
+  /* filas de acciones */
+  .row { display: flex; gap: .5rem; justify-content: space-between; }
+  
+  /* botones */
+  .btn {
+    display: block; margin: 1rem auto 0 auto; width: 150px;
+    padding: .6rem 1rem; border-radius: 999px; font-weight: 700; font-size: .9rem; text-align: center;
+  }
+  .btn.primary { background: #0b0b0b; color: #fff; border: 1px solid #0b0b0b; }
+  .btn.ghost   { background: #fff; color: #333; border: 1px solid #ddd; margin: 1rem 0 0 0; }
+  
+  /* info / error */
+  .info {
+    background: #eef9f1; border: 1px solid #cfeedd; color: #0f6a2d;
+    padding: .45rem .7rem; border-radius: 10px; text-align: center; margin: .3rem 0 .8rem; font-size: .85rem;
+  }
+  .error {
+    background: #fff2f2; border: 1px solid #ffd6d6; color: #b30000;
+    padding: .45rem .7rem; border-radius: 10px; text-align: center; margin: .3rem 0 .8rem; font-size: .85rem;
+  }
+  
+  /* links */
+  .links {
+    margin-top: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  
+  .links a {
+    color: #5a5a5a;
+    text-decoration: none;
+    font-size: .85rem;
+    cursor: pointer;               /* 👈 cursor de mano para que se note clickeable */
+    transition: color 0.2s ease;   /* 👈 transición suave */
+  }
+  
+  .links a:hover {
+    color: #000;                   /* 👈 cambia solo el color al pasar el mouse */
+    text-decoration: underline;    /* 👈 subraya solo en hover */
+  }
+  @media (max-width: 400px) {
+    .card { width: 90%; min-height: 500px; padding: 1.6rem 1.1rem; }
+    .brand-icon { width: 50px; height: 50px; }
+    .brand-script { font-size: 1.4rem; }
+  }

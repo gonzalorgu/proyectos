@@ -1,0 +1,23 @@
+<article class="card">
+  <!-- Imagen clickeable -->
+  <a [routerLink]="['/vestido', dress.id]" class="imgwrap">
+    <img class="img" [src]="dress.fotos[0] || 'assets/placeholder.jpg'" [alt]="dress.nombre" />
+  </a>
+  
+  <div class="body">
+    <h3>{{ dress.nombre }}</h3>
+    <p class="desc">{{ dress.descripcion }}</p>
+
+    <div class="chips">
+      <span class="chip">Alquiler: S/ {{ dress.precioAlquiler }}</span>
+      <!-- ✅ Usando @if de Angular 20 en lugar de *ngIf -->
+      @if (dress.precioVenta) {
+        <span class="chip dark">Venta: S/ {{ dress.precioVenta }}</span>
+      }
+    </div>
+
+    <div class="actions">
+      <a class="btn primary" [routerLink]="['/vestido', dress.id]">ver más</a>
+    </div>
+  </div>
+</article>

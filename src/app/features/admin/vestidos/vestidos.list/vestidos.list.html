@@ -1,0 +1,53 @@
+<div class="vestidos-list-container">
+    <div *ngIf="loading" class="loading-spinner">
+      <p>Cargando vestidos...</p>
+    </div>
+  
+    <div *ngIf="!loading && vestidos.length === 0" class="empty-state">
+      <p>No hay vestidos registrados</p>
+    </div>
+  
+    <div *ngIf="!loading && vestidos.length > 0" class="vestidos-grid">
+      <div 
+        *ngFor="let vestido of vestidos; trackBy: trackByVestidoId" 
+        class="vestido-card"
+        [class.no-disponible]="!vestido.disponible">
+        
+        <div class="card-header">
+          <span class="categoria-badge">{{ vestido.categoria }}</span>
+          <span class="disponible-badge" [class.disponible]="vestido.disponible">
+            {{ vestido.disponible ? 'Disponible' : 'No disponible' }}
+          </span>
+        </div>
+  
+        <div class="card-image">
+          <img 
+            [src]="vestido.imagen || '../../../../assets/4.jpg'" 
+            [alt]="vestido.nombre"
+            (error)="$any($event.target).src='../../../../assets/1.jpg'">
+        </div>
+  
+        <div class="card-body">
+          <h3>{{ vestido.nombre }}</h3>
+          <div class="card-details">
+            <p><strong>Talla:</strong> {{ vestido.talla }}</p>
+            <p><strong>Color:</strong> {{ vestido.color }}</p>
+            <p class="precio">${{ vestido.precio }}</p>
+          </div>
+          <p class="descripcion">{{ vestido.descripcion || 'Sin descripción' }}</p>
+        </div>
+  
+        <div class="card-actions">
+          <button (click)="onToggleDisponible(vestido)" class="btn btn-toggle">
+            {{ vestido.disponible ? 'Marcar no disponible' : 'Marcar disponible' }}
+          </button>
+          <button (click)="onEdit(vestido)" class="btn btn-edit">
+            Editar
+          </button>
+          <button (click)="onDelete(vestido.id)" class="btn btn-delete">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

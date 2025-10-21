@@ -1,0 +1,54 @@
+:host{
+  display: block;
+  padding-top: 100px;
+}
+
+.wrap{ max-width:1400px; margin:1.4rem auto 2rem; padding:0 1rem; }
+.title{ font-weight:800; margin:0 0 .8rem; font-size:1.4rem; }
+
+/* Tarjetas */
+.card{
+  background:#fff; border:1px solid #eaeaea; border-radius:18px;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
+  padding:1rem; margin-bottom:1rem;
+}
+
+/* Avatar + preferencias */
+.avatarBox{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.avatar{ width:84px; height:84px; border-radius:999px; overflow:hidden; border:1px solid #eee; background:#fafafa; }
+.avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.placeholder{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-weight:800; color:#777; }
+
+.prefs{ margin-top:.6rem; }
+.label{ display:block; color:#444; margin:.5rem 0 .3rem; font-weight:700; }
+.segmented{ display:flex; gap:.5rem; }
+.segment{
+  min-width:42px; height:32px; padding:0 .6rem; border-radius:999px;
+  border:1px solid #ddd; background:#fff; font-weight:700;
+}
+.segment.active{ background:#111; color:#fff; border-color:#111; }
+
+/* Datos personales */
+.card-title{ margin:0 0 .6rem; font-weight:800; font-size:1.1rem; }
+.grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:.8rem; }
+.field{ display:flex; flex-direction:column; gap:.25rem; }
+.field span{ font-size:.92rem; color:#555; }
+.field input{
+  padding:.55rem .75rem; border:1px solid #ddd; border-radius:12px; background:#fff;
+}
+
+/* Password */
+.grid3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:.8rem; }
+
+/* Botones */
+.actions{ margin-top:.8rem; display:flex; gap:.6rem; }
+.btn{ padding:.55rem 1rem; border:1px solid #111; border-radius:999px; background:#fff; font-weight:800; }
+.btn.primary{ background:#111; color:#fff; }
+.btn.ghost{ border:1px solid #ddd; }
+.btn.link{ border:none; background:transparent; color:#666; text-decoration:underline; padding:.2rem .4rem; }
+
+/* Responsive */
+@media (max-width: 900px){
+  .grid2{ grid-template-columns: 1fr; }
+  .grid3{ grid-template-columns: 1fr; }
+}

@@ -1,0 +1,169 @@
+<!-- Overlay para cerrar dropdowns al hacer clic fuera -->
+@if (showChatDropdown() || showHelpDropdown() || showNotificationsDropdown() || showUserDropdown()) {
+  <div class="dropdown-overlay" (click)="closeAllDropdowns()"></div>
+}
+
+<header>
+  <div class="left">
+    <div class="menu-container">
+      <div class="menu" [class.menu-toggle]="menuOpen" (click)="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <a routerLink="/admin/inicio" class="brand-link">
+      <div class="brand">
+        <span class="name">Erma Zafe</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="right">
+    <!-- Chat -->
+    <div class="dropdown-container">
+      <button class="icons-header" (click)="toggleChatDropdown()" aria-label="Mensajes">
+        <img src="assets/icons/chat.svg" alt="chat">
+        @if (unreadMessages() > 0) {
+          <span class="badge">{{ unreadMessages() }}</span>
+        }
+      </button>
+
+      @if (showChatDropdown()) {
+        <div class="dropdown">
+          <div class="dropdown-header">
+            <h3>Mensajes</h3>
+          </div>
+          <div class="dropdown-item">
+            <p class="message-sender">María González</p>
+            <p class="message-preview">Hola, necesito información sobre...</p>
+            <span class="time">Hace 5 min</span>
+          </div>
+          <div class="dropdown-item">
+            <p class="message-sender">Carlos Pérez</p>
+            <p class="message-preview">¿Cuándo puedo recoger el vestido?</p>
+            <span class="time">Hace 1 hora</span>
+          </div>
+          <div class="dropdown-footer">
+            <a routerLink="/admin/mensajes" (click)="closeAllDropdowns()">Ver todos los mensajes</a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Ayuda -->
+    <div class="dropdown-container">
+      <button class="icons-header" (click)="toggleHelpDropdown()" aria-label="Ayuda">
+        <img src="assets/icons/question.svg" alt="question">
+      </button>
+
+      @if (showHelpDropdown()) {
+        <div class="dropdown">
+          <div class="dropdown-header">
+            <h3>Centro de Ayuda</h3>
+          </div>
+          <a class="dropdown-item" routerLink="/admin/ayuda/guia" (click)="closeAllDropdowns()">
+            <img src="../../../../assets/icons/book-svgrepo-com.svg" alt="Guía" class="dropdown-icon">
+            <span>Guía de uso</span>
+          </a>
+          <a class="dropdown-item" routerLink="/admin/ayuda/faq" (click)="closeAllDropdowns()">
+            <img src="../../../../assets/icons/question-circle-svgrepo-com.svg" alt="FAQ" class="dropdown-icon">
+            <span>Preguntas frecuentes</span>
+          </a>
+          <a class="dropdown-item" routerLink="/admin/ayuda/contacto" (click)="closeAllDropdowns()">
+            <img src="../../../../assets/icons/mail-svgrepo-com.svg" alt="Contacto" class="dropdown-icon">
+            <span>Contactar soporte</span>
+          </a>
+        </div>
+      }
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="dropdown-container">
+      <button class="icons-header" (click)="toggleNotificationsDropdown()" aria-label="Notificaciones">
+        <img src="assets/icons/notification.svg" alt="notification">
+        @if (unreadNotifications() > 0) {
+          <span class="badge">{{ unreadNotifications() }}</span>
+        }
+      </button>
+
+      @if (showNotificationsDropdown()) {
+        <div class="dropdown">
+          <div class="dropdown-header">
+            <h3>Notificaciones</h3>
+          </div>
+          <div class="dropdown-item notification">
+            <img src="../../../../assets/icons/calendar-check-svgrepo-com.svg" alt="Reserva" class="dropdown-icon">
+            <div class="notification-content">
+              <p class="notification-title">Nueva reserva</p>
+              <p class="notification-text">Cliente reservó vestido #1234</p>
+              <span class="time">Hace 10 min</span>
+            </div>
+          </div>
+          <div class="dropdown-item notification">
+            <img src="../../../../assets/icons/money.svg" alt="Pago" class="dropdown-icon">
+            <div class="notification-content">
+              <p class="notification-title">Pago recibido</p>
+              <p class="notification-text">Pago de S/500 confirmado</p>
+              <span class="time">Hace 2 horas</span>
+            </div>
+          </div>
+          <div class="dropdown-footer">
+            <a routerLink="/admin/notificaciones" (click)="closeAllDropdowns()">Ver todas</a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Usuario -->
+    <div class="dropdown-container">
+      <button class="icons-header" (click)="toggleUserDropdown()" aria-label="Perfil">
+        <img src="../../../../assets/icons/user-svgrepo-com.svg" alt="user">
+      </button>
+
+      @if (showUserDropdown()) {
+        <div class="dropdown user-dropdown">
+          <div class="dropdown-header user-info">
+            <img src="../../../../assets/icons/user-svgrepo-com.svg" alt="avatar" class="avatar">
+            <div>
+              <p class="user-name">Admin Usuario</p>
+              <p class="user-email">admin@ermazafe.com</p>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="goToProfile()">
+            <img src="../../../../assets/icons/profile-circle-svgrepo-com.svg" alt="Perfil" class="dropdown-icon">
+            <span>Mi Perfil</span>
+          </a>
+          <a class="dropdown-item" (click)="goToSettings()">
+            <img src="../../../../assets/icons/" alt="Configuración" class="dropdown-icon">
+            <span>Configuración</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item logout" (click)="confirmLogout($event)">
+            <img src="../../../../assets/icons/exit-svgrepo-com.svg" alt="Salir" class="dropdown-icon">
+            <span>Cerrar Sesión</span>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</header>
+
+<div class="siderbar" [class.menu-toggle]="menuOpen">
+  <nav>
+    <a routerLink="/admin/inicio" routerLinkActive="selected"><img src="assets/icons/home.svg" alt=""><span>Página de inicio</span></a>
+    <a routerLink="/admin/usuarios" routerLinkActive="selected"><img src="../../../../assets/icons/users.svg" alt=""><span>Usuarios</span></a>
+    <a routerLink="/admin/vestidos" routerLinkActive="selected"><img src="../../../../assets/icons/woman-fashion-clothes-svgrepo-com.svg" alt=""><span>Vestido</span></a>
+    <a routerLink="/admin/alquileres" routerLinkActive="selected"><img src="../../../../assets/icons/marindeck-svgrepo-com.svg" alt=""><span>Alquileres</span></a>
+    <a routerLink="/admin/pagos" routerLinkActive="selected"><img src="../../../../assets/icons/money.svg" alt=""><span>Pagos</span></a>
+    <a routerLink="/admin/reportes" routerLinkActive="selected"><img src="assets/icons/file.svg" alt=""><span>Reportes</span></a>
+    <a routerLink="/admin/ajustes" routerLinkActive="selected"><img src="assets/icons/tools.svg" alt=""><span>Ajustes</span></a>
+    <a href="#" (click)="confirmLogout($event)"><img src="../../../../assets/icons/exit-svgrepo-com.svg" alt=""><span>Cerrar sesión</span></a>
+  </nav>
+</div>
+
+<main [class.menu-toggle]="menuOpen">
+  <router-outlet></router-outlet>
+</main>

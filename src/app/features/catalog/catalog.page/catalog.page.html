@@ -1,0 +1,64 @@
+<section class="wrap">
+    <h1 class="title">Catalogo</h1>
+  
+    <div class="layout">
+      <!-- Sidebar minimal -->
+      <aside class="filters">
+        <label class="field">
+          <span>Buscar</span>
+          <input type="search" [ngModel]="store.q()" (ngModelChange)="store.setQuery($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Color</span>
+          <input type="text" [ngModel]="store.color()" (ngModelChange)="store.setColor($event)" />
+        </label>
+  
+        <label class="field">
+          <span>Categoría</span>
+          <select [ngModel]="store.categoria()" (ngModelChange)="store.setCategoria($event)">
+            <option value="">Todas</option>
+            <option value="novia">Novia</option>
+            <option value="gala">Gala</option>
+            <option value="quinceañera">Quinceañera</option>
+          </select>
+        </label>
+  
+        <label class="field">
+          <span>Talla</span>
+          <input type="text" [ngModel]="store.talla()" (ngModelChange)="store.setTalla($event)" placeholder="S, M, L..." />
+        </label>
+  
+        <label class="field">
+          <span>Ordenar</span>
+          <select [ngModel]="store.sort()" (ngModelChange)="store.setSort($event)">
+            <option value="relevancia">Relevancia</option>
+            <option value="precioAlquilerAsc">Menor alquiler</option>
+            <option value="precioAlquilerDesc">Mayor alquiler</option>
+            <option value="nombreAsc">Nombre A–Z</option>
+            <option value="nombreDesc">Nombre Z–A</option>
+          </select>
+        </label>
+      </aside>
+  
+      <!-- Grid -->
+      <div class="grid">
+        @for (d of store.paged(); track d.id) {
+          <app-dress-card [dress]="d" />
+        }
+  
+        @if (store.paged().length === 0) {
+          <p class="empty">No hay resultados con esos filtros.</p>
+        }
+      </div>
+    </div>
+  
+    <!-- Footer de paginación -->
+    <div class="pager">
+      <span>Página {{ store.page() }} de {{ store.totalPages() }}</span>
+      <div class="gap"></div>
+      <button class="btn" (click)="store.setPage(store.page()-1)" [disabled]="store.page()<=1">Anterior</button>
+      <button class="btn primary" (click)="store.setPage(store.page()+1)" [disabled]="store.page()>=store.totalPages()">Siguiente</button>
+    </div>
+  </section>
+  
