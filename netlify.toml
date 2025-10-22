@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
   publish = "dist/erma-zafe/browser"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF"
 
 [[redirects]]
   from = "/*"
@@ -9,8 +10,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_VERSION = "10"
 
-# Deshabilitar el plugin de Angular Runtime
-[functions]
-  external_node_modules = []
+[[plugins]]
+  package = "@netlify/angular-runtime"
+  
+  [plugins.inputs]
+    disabled = true
