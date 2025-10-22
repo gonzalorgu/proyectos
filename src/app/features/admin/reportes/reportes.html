@@ -1,12 +1,10 @@
 <div class="reporte-container">
-  <!-- Botón de imprimir -->
   <div class="print-actions no-print">
     <button class="btn-print" (click)="imprimirReporte()">
-      <img src="../../../../assets/icons/print-svgrepo-com.svg" alt="Imprimir" />
+      <img src="assets/icons/print-svgrepo-com.svg" alt="Imprimir" />
     </button>
   </div>
 
-  <!-- ✅ Cambiar <header> a <div> para evitar conflicto -->
   <div class="reporte-header">
     <div class="company-info">
       <h1>ERMA ZAFE</h1>
@@ -142,21 +140,21 @@
     <div class="analisis-content">
       <div class="analisis-item">
         <h4>
-          <img src="../../../../assets/icons/graphic-on-screen-svgrepo-com.svg" alt="Tendencia" />
+          <img src="assets/icons/graphic-on-screen-svgrepo-com.svg" alt="Tendencia" />
           Tendencia de Alquileres
         </h4>
         <p>Se observa un crecimiento sostenido en los meses de Mayo a Julio, alcanzando un pico de <strong>30 alquileres</strong> en Julio. Esto coincide con la temporada alta de eventos sociales.</p>
       </div>
       <div class="analisis-item">
         <h4>
-          <img src="../../../../assets/icons/money-bag-svgrepo-com.svg" alt="Ingresos" />
+          <img src="assets/icons/money-bag-svgrepo-com.svg" alt="Ingresos" />
           Comportamiento de Ingresos
         </h4>
         <p>Los ingresos mensuales promedio son de <strong>${{ promedioIngresos.toFixed(0) }}</strong>, con un máximo de <strong>$4,200</strong> en Julio. El precio promedio por alquiler se mantiene en <strong>${{ (totalIngresos / totalAlquileres).toFixed(2) }}</strong>.</p>
       </div>
       <div class="analisis-item">
         <h4>
-          <img src="../../../../assets/icons/trophy-svgrepo-com.svg" alt="Productos" />
+          <img src="assets/icons/trophy-svgrepo-com.svg" alt="Productos" />
           Productos Destacados
         </h4>
         <p>El "Vestido de Noche Elegante" lidera con <strong>45 alquileres</strong>, representando el {{ ((45 / totalAlquileres) * 100).toFixed(1) }}% del total. Los 5 vestidos más populares concentran el {{ getPorcentajeVestidosPopulares() }}% de los alquileres.</p>

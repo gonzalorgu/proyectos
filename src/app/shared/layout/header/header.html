@@ -1,37 +1,34 @@
 <header class="header" [class.scrolled]="scrolled()">
-  <div class="container topbar">
+  <div class="container">
     <a routerLink="/home" aria-label="Ir al inicio" class="brand-link">
       <span class="logo-text brand-script">Erma Zafe</span>
     </a>
 
-    <nav class="nav main">
-      <!-- ✅ Links visibles siempre -->
+    <nav class="nav">
       <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a>
       <a routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
       
-      <!-- ✅ Links visibles solo cuando está autenticado -->
       @if (isLoggedIn()) {
         <a routerLink="/mis-alquiler" routerLinkActive="active">Mis alquileres</a>
         <a routerLink="/perfil" routerLinkActive="active">Mi perfil</a>
       }
     </nav>
 
-    <!-- Usuario autenticado o botón de login -->
     @if (isLoggedIn()) {
       <div class="user-menu">
         <button class="user-btn" (click)="toggleUserMenu()">
-          <img src="../../../../assets/icons/profile-circle-svgrepo-com.svg" alt="Usuario" class="user-avatar">
+          <img src="assets/icons/profile-circle-svgrepo-com.svg" alt="Usuario" class="user-avatar">
           <span>{{ userName() }}</span>
         </button>
 
         @if (showUserMenu()) {
           <div class="user-dropdown">
             <a routerLink="/perfil" (click)="closeUserMenu()">
-              <img src="../../../../assets/icons/profile-circle-svgrepo-com.svg" alt="Perfil" class="menu-icon">
+              <img src="assets/icons/profile-circle-svgrepo-com.svg" alt="Perfil" class="menu-icon">
               Mi Perfil
             </a>
             <a routerLink="/mis-alquiler" (click)="closeUserMenu()">
-              <img src="../../../../assets/icons/woman-fashion-clothes-svgrepo-com.svg" alt="Alquileres" class="menu-icon">
+              <img src="assets/icons/woman-fashion-clothes-svgrepo-com.svg" alt="Alquileres" class="menu-icon">
               Mis Alquileres
             </a>
             <div class="divider"></div>

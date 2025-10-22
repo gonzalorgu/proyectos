@@ -1,108 +1,109 @@
 <section class="panel">
-    <div class="panel-header">
-      <h2>Gestión de Alquileres</h2>
-      <button class="btn btn-primary" (click)="abrirModalNuevo()">
-        + Nuevo Alquiler
-      </button>
-    </div>
-  
-    <!-- Controles de búsqueda y filtros -->
-    <div class="controls">
-      <div class="search-box">
-        <div class="search-input-wrapper">
-          <img src="assets/icons/search.svg" alt="Buscar" class="search-icon" />
-          <input 
-            type="text" 
-            placeholder=""
-            [value]="searchTerm()"
-            (input)="onSearchChange($any($event.target).value)"
-            class="search-input">
-        </div>
-      </div>
-    
-      <div class="filters">
-        <select 
-          [value]="filtroEstado()"
-          (change)="onFiltroEstadoChange($any($event.target).value)"
-          class="filter-select">
-          <option *ngFor="let estado of estadosDisponibles" [value]="estado.value">
-            {{ estado.label }}
-          </option>
-        </select>
-  
-        <select 
-          [value]="ordenPor()"
-          (change)="onOrdenChange($any($event.target).value)"
-          class="filter-select">
-          <option value="fecha">Ordenar por Fecha</option>
-          <option value="cliente">Ordenar por Cliente</option>
-          <option value="estado">Ordenar por Estado</option>
-        </select>
-  
-        <button class="btn btn-export" (click)="exportarCSV()">
-          <img src="../../../../assets/icons/export-2-svgrepo-com.svg" alt="Exportar CSV" class="icon-export" />
-        </button>        
+  <div class="panel-header">
+    <h2>Gestión de Alquileres</h2>
+    <button class="btn btn-primary" (click)="abrirModalNuevo()">
+      + Nuevo Alquiler
+    </button>
+  </div>
+
+  <div class="controls">
+    <div class="search-box">
+      <div class="search-input-wrapper">
+        <img src="assets/icons/search.svg" alt="Buscar" class="search-icon" />
+        <input 
+          type="text" 
+          placeholder="Buscar por cliente, vestido o ID..."
+          [value]="searchTerm()"
+          (input)="onSearchChange($event)"
+          class="search-input">
       </div>
     </div>
   
-    <!-- Contador de resultados -->
-    <div class="results-info">
-      Mostrando {{ alquileresFiltrados().length }} de {{ rows().length }} alquileres
+    <div class="filters">
+      <select 
+        [value]="filtroEstado()"
+        (change)="onFiltroEstadoChange($event)"
+        class="filter-select">
+        @for (estado of estadosDisponibles; track estado.value) {
+          <option [value]="estado.value">{{ estado.label }}</option>
+        }
+      </select>
+
+      <select 
+        [value]="ordenPor()"
+        (change)="onOrdenChange($event)"
+        class="filter-select">
+        <option value="fecha">Ordenar por Fecha</option>
+        <option value="cliente">Ordenar por Cliente</option>
+        <option value="estado">Ordenar por Estado</option>
+      </select>
+
+      <button class="btn btn-export" (click)="exportarCSV()">
+        <img src="assets/icons/export-2-svgrepo-com.svg" alt="Exportar CSV" class="icon-export" />
+      </button>        
     </div>
-  
-    <!-- Tabla con tu estructura de divs -->
-    <div class="table">
-      <div class="t-head">
-        <div>ID</div>
-        <div>Cliente</div>
-        <div>Vestido</div>
-        <div>Desde</div>
-        <div>Hasta</div>
-        <div>Días</div>
-        <div>Precio</div>
-        <div>Estado</div>
-        <div>Acciones</div>
+  </div>
+
+  <div class="results-info">
+    Mostrando {{ alquileresFiltrados().length }} de {{ rows().length }} alquileres
+  </div>
+
+  <div class="table">
+    <div class="t-head">
+      <div>ID</div>
+      <div>Cliente</div>
+      <div>Vestido</div>
+      <div>Desde</div>
+      <div>Hasta</div>
+      <div>Días</div>
+      <div>Precio</div>
+      <div>Estado</div>
+      <div>Acciones</div>
+    </div>
+
+    @for (r of alquileresFiltrados(); track r.id) {
+      <div class="t-row">
+        <div><strong>#{{ r.id }}</strong></div>
+        <div class="cliente-name">{{ r.cliente }}</div>
+        <div>{{ r.vestido }}</div>
+        <div>{{ r.desde | date:'dd/MM/yyyy' }}</div>
+        <div>{{ r.hasta | date:'dd/MM/yyyy' }}</div>
+        <div>
+          <span class="badge-days">{{ calcularDias(r.desde, r.hasta) }} días</span>
+        </div>
+        <div class="precio">{{ r.precio ? ('$' + r.precio) : '-' }}</div>
+        <div>
+          <select 
+            [value]="r.estado"
+            (change)="cambiarEstado(r, $event)"
+            class="estado-select"
+            [style.background-color]="getEstadoColor(r.estado)">
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="entregado">Entregado</option>
+            <option value="devuelto">Devuelto</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button 
+            class="btn-icon btn-edit" 
+            (click)="abrirModalEditar(r)"
+            title="Editar">
+            <img src="assets/icons/edit-3-svgrepo-com.svg" alt="Editar" class="icon-white" />
+          </button>
+          <button 
+            class="btn-icon btn-delete" 
+            (click)="eliminarAlquiler(r.id)"
+            title="Eliminar">
+            <img src="assets/icons/trash-blank-alt-svgrepo-com.svg" alt="Eliminar" class="icon-white" />
+          </button>
+        </div>
       </div>
-  
-      @for (r of alquileresFiltrados(); track r.id) {
-        <div class="t-row">
-          <div><strong>#{{ r.id }}</strong></div>
-          <div class="cliente-name">{{ r.cliente }}</div>
-          <div>{{ r.vestido }}</div>
-          <div>{{ r.desde | date:'dd/MM/yyyy' }}</div>
-          <div>{{ r.hasta | date:'dd/MM/yyyy' }}</div>
-          <div>
-            <span class="badge-days">{{ calcularDias(r.desde, r.hasta) }} días</span>
-          </div>
-          <div class="precio">{{ r.precio ? ('$' + r.precio) : '-' }}</div>
-          <div>
-            <select 
-              [value]="r.estado"
-              (change)="cambiarEstado(r, $any($event.target).value)"
-              class="estado-select"
-              [style.background-color]="getEstadoColor(r.estado)">
-              <option value="pendiente">Pendiente</option>
-              <option value="confirmado">Confirmado</option>
-              <option value="entregado">Entregado</option>
-              <option value="devuelto">Devuelto</option>
-              <option value="cancelado">Cancelado</option>
-            </select>
-          </div>
-          <div class="actions">
-            <button 
-              class="btn-icon btn-edit" 
-              (click)="abrirModalEditar(r)"
-              title="Editar"><img src="../../../../assets/icons/edit-3-svgrepo-com.svg" alt="Editar" class="icon-white" /></button>
-            <button 
-              class="btn-icon btn-delete" 
-              (click)="eliminarAlquiler(r.id)"
-              title="Eliminar"> <img src="../../../../assets/icons/trash-blank-alt-svgrepo-com.svg" alt="Editar" class="icon-white" /></button>
-          </div>
-        </div>
-      } @empty {
-        <div class="t-row empty">
-          <div class="empty-message">No se encontraron alquileres</div>
-        </div>
-      }
-    </div>
-  </section>
+    } @empty {
+      <div class="t-row empty">
+        <div class="empty-message">No se encontraron alquileres</div>
+      </div>
+    }
+  </div>
+</section>

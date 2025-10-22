@@ -1,95 +1,83 @@
+:host {
+  display: block;
+  padding-top: 90px;
+}
 
+.auth-wrap {
+  min-height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2.5rem;
+  background: #f8faf9;
+}
 
-   :host{
-    display: block;
-    padding-top: 90px;
-  }
+.card {
+  width: 310px;
+  min-height: 440px;
+  background: #fff;
+  border: 1px solid #e6efea;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  padding: 2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
 
-   .auth-wrap {
-    min-height: 550px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 2.5rem;
-    background: #f8faf9;
-  }
-  
-  .card {
-    width: 310px;
-    min-height: 440px;
-    background: #fff;
-    border: 1px solid #e6efea;
-    border-radius: 18px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
-    padding: 2rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* ============================
-     LOGO + TEXTO
-     ============================ */
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row-reverse;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    text-align: left;
-  }
-  
-  .brand-icon {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 10px;
-  }
-  
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    line-height: 1.2;
-  }
-  
-  .brand-script {
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.6rem;
-    color: #111;
-  }
-  
-  .brand-text small {
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.brand-icon {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+
+  small {
     color: #4f5b57;
     font-size: 0.8rem;
   }
-  
-  /* ============================
-     TÍTULO
-     ============================ */
-  .title {
-    text-align: center;
-    margin: 0.5rem 0 1rem;
-    font-size: 0.95rem;
-    color: #333;
-  }
-  
-  /* ============================
-     CAMPOS
-     ============================ */
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    margin-bottom: 0.8rem;
-  }
-  
-  .field span {
+}
+
+.brand-script {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.6rem;
+  color: #111;
+}
+
+.title {
+  text-align: center;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.8rem;
+
+  span {
     color: #4c4c4c;
     font-size: 0.85rem;
   }
-  
-  .field input {
+
+  input {
     width: 280px;
     padding: 0.6rem 0.85rem;
     border-radius: 999px;
@@ -98,115 +86,115 @@
     outline: none;
     font-size: 0.9rem;
   }
-  
-  /* ✅ Wrapper para input de contraseña con ojito */
-  .password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .password-wrapper input {
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
     padding-right: 3rem;
   }
-  
-  .toggle-password {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #666;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    transition: color 0.2s ease;
-  
-    &:hover {
-      color: #333;
-    }
-  
-    svg {
-      width: 20px;
-      height: 20px;
-    }
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #333;
   }
-  
-  /* ============================
-     BOTÓN
-     ============================ */
-  .btn {
-    display: block;
-    margin: 1rem auto 0 auto;
-    width: 130px;
-    padding: 0.6rem 1rem;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-align: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
-  
-  .btn.primary {
+}
+
+.btn {
+  display: block;
+  margin: 1rem auto 0;
+  width: 130px;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.primary {
     background: #0b0b0b;
     color: #fff;
     border: 1px solid #0b0b0b;
+
+    &:hover:not(:disabled) {
+      background: #222;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
-  
-  /* ============================
-     LINKS INFERIORES
-     ============================ */
-  .links {
-    margin-top: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-  
-  .links a {
+}
+
+.links {
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  a {
     color: #5a5a5a;
     text-decoration: none;
     font-size: 0.85rem;
-    cursor: pointer;
     transition: color 0.2s ease;
-  }
-  
-  .links a:hover {
-    color: #000;
-    text-decoration: underline;
-  }
-  
-  /* ============================
-     ERROR
-     ============================ */
-  .error {
-    background: #fff2f2;
-    border: 1px solid #ffd6d6;
-    color: #b30000;
-    padding: 0.45rem 0.7rem;
-    border-radius: 10px;
-    text-align: center;
-    margin: 0.3rem 0 0.8rem;
-    font-size: 0.85rem;
-  }
-  
-  /* ============================
-     RESPONSIVE
-     ============================ */
-  @media (max-width: 400px) {
-    .card {
-      width: 90%;
-      min-height: 480px;
-      padding: 1.6rem 1.1rem;
-    }
-    .brand-icon {
-      width: 50px;
-      height: 50px;
-    }
-    .brand-script {
-      font-size: 1.4rem;
+
+    &:hover {
+      color: #000;
+      text-decoration: underline;
     }
   }
+}
+
+.error {
+  background: #fff2f2;
+  border: 1px solid #ffd6d6;
+  color: #b30000;
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0.3rem 0 0.8rem;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 400px) {
+  .card {
+    width: 90%;
+    min-height: 480px;
+    padding: 1.6rem 1.1rem;
+  }
+
+  .brand-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .brand-script {
+    font-size: 1.4rem;
+  }
+}

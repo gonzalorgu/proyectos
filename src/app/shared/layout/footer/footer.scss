@@ -1,5 +1,3 @@
-:host { display: block; }
-
 .site-footer {
   border-top: 1px solid #eee;
   background: #fff;
@@ -7,16 +5,15 @@
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1.6rem 1rem 1.2rem;
   display: grid;
-  grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr; // ✅ 4 columnas ahora
+  grid-template-columns: 1.3fr 0.9fr 0.9fr 0.9fr;
   gap: 1.2rem;
   align-items: start;
 }
 
-/* Marca (igual que header: cursiva elegante) */
 .brand-script {
   font-family: 'Great Vibes', cursive;
   font-style: italic;
@@ -53,21 +50,15 @@
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
-}
 
-.col a:hover {
-  text-decoration: underline;
-}
-
-/* ✅ Estilos para redes sociales */
-.social-col h4 {
-  margin-bottom: 0.8rem;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .social-links {
   display: flex;
   gap: 0.7rem;
-  align-items: center;
 }
 
 .social-links a {
@@ -80,31 +71,26 @@
   background: #f5f5f5;
   color: #333;
   font-size: 1.1rem;
-  text-decoration: none;
   transition: all 0.3s ease;
+
+  &:hover {
+    background: #111;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 }
 
-.social-links a:hover {
-  background: #111;
-  color: #fff;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Iconos específicos con colores de marca al hover */
 .social-links a:has(.fa-instagram):hover {
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: #fff;
 }
 
 .social-links a:has(.fa-tiktok):hover {
   background: #000;
-  color: #fff;
 }
 
 .social-links a:has(.fa-facebook-f):hover {
   background: #1877f2;
-  color: #fff;
 }
 
 .copy {
@@ -114,15 +100,13 @@
   padding: 0.8rem 1rem 1.2rem;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .container {
-    grid-template-columns: 1fr 1fr; // ✅ 2 columnas en tablets
-    gap: 1.2rem;
+    grid-template-columns: 1fr 1fr;
   }
 
   .brand {
-    grid-column: 1 / -1; // ✅ Marca ocupa toda la fila
+    grid-column: 1 / -1;
   }
 
   .desc {
@@ -136,12 +120,8 @@
 
 @media (max-width: 640px) {
   .container {
-    grid-template-columns: 1fr; // ✅ 1 columna en móviles
+    grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .social-links {
-    justify-content: flex-start;
   }
 
   .social-links a {

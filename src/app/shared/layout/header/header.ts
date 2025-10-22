@@ -4,7 +4,6 @@ import { AuthService } from '../../../servicios/auth.service/auth.service';
 
 @Component({
   selector: 'app-header',
-  standalone: true,
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.scss'
@@ -16,7 +15,6 @@ export class Header {
   scrolled = signal(false);
   showUserMenu = signal(false);
 
-  // ✅ Usar signals del servicio compartido
   isLoggedIn = this.authService.isLoggedIn;
   userName = this.authService.userName;
 
@@ -26,7 +24,7 @@ export class Header {
   }
 
   toggleUserMenu() {
-    this.showUserMenu.set(!this.showUserMenu());
+    this.showUserMenu.update(v => !v);
   }
 
   closeUserMenu() {
@@ -34,9 +32,7 @@ export class Header {
   }
 
   logout() {
-    const confirmed = confirm('¿Estás seguro de que deseas cerrar sesión?');
-    
-    if (confirmed) {
+    if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
       this.authService.logout();
       this.showUserMenu.set(false);
       this.router.navigate(['/login']);

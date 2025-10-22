@@ -4,14 +4,12 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recover.page',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './recover.page.html',
   styleUrl: './recover.page.scss'
 })
 export class RecoverPage {
-      // 'step' sin alias, usando tipo literal
-  step = signal<'email' | 'code' | 'reset'>('email');
-
+  step    = signal<'email' | 'code' | 'reset'>('email');
   loading = signal(false);
   error   = signal<string | null>(null);
   info    = signal<string | null>(null);
@@ -21,12 +19,12 @@ export class RecoverPage {
   pass    = signal('');
   confirm = signal('');
 
-  onEmail(e: Event){ this.email.set((e.target as HTMLInputElement).value.trim()); }
-  onCode(e: Event){ this.code.set((e.target as HTMLInputElement).value.trim()); }
-  onPass(e: Event){ this.pass.set((e.target as HTMLInputElement).value); }
-  onConfirm(e: Event){ this.confirm.set((e.target as HTMLInputElement).value); }
+  onEmail(e: Event)   { this.email.set((e.target as HTMLInputElement).value.trim()); }
+  onCode(e: Event)    { this.code.set((e.target as HTMLInputElement).value.trim()); }
+  onPass(e: Event)    { this.pass.set((e.target as HTMLInputElement).value); }
+  onConfirm(e: Event) { this.confirm.set((e.target as HTMLInputElement).value); }
 
-  sendCode(){
+  sendCode() {
     this.error.set(null); this.info.set(null);
     if (!this.email()) { this.error.set('Ingresa tu correo'); return; }
     this.loading.set(true);
@@ -37,7 +35,7 @@ export class RecoverPage {
     }, 600);
   }
 
-  verifyCode(){
+  verifyCode() {
     this.error.set(null); this.info.set(null);
     if (!this.code()) { this.error.set('Ingresa el código que te enviamos'); return; }
     this.loading.set(true);
@@ -47,7 +45,7 @@ export class RecoverPage {
     }, 600);
   }
 
-  resetPassword(){
+  resetPassword() {
     this.error.set(null); this.info.set(null);
     if (!this.pass()) { this.error.set('Ingresa una nueva contraseña'); return; }
     if (this.pass().length < 6) { this.error.set('La contraseña debe tener al menos 6 caracteres'); return; }
@@ -57,10 +55,18 @@ export class RecoverPage {
     setTimeout(() => {
       this.loading.set(false);
       alert('Contraseña actualizada (demo). Ahora puedes iniciar sesión.');
-      // Aquí podrías navegar a /login
     }, 700);
   }
 
-  backToEmail(){ this.step.set('email'); this.error.set(null); this.info.set(null); this.code.set(''); }
-  backToCode(){ this.step.set('code'); this.error.set(null); this.info.set(null); this.pass.set(''); this.confirm.set(''); }
+  backToEmail() {
+    this.step.set('email');
+    this.error.set(null); this.info.set(null);
+    this.code.set('');
+  }
+
+  backToCode() {
+    this.step.set('code');
+    this.error.set(null); this.info.set(null);
+    this.pass.set(''); this.confirm.set('');
+  }
 }

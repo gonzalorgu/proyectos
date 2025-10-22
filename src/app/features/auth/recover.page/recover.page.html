@@ -1,85 +1,76 @@
 <section class="auth-wrap">
-    <div class="card">
-      <!-- Logo: texto a la izquierda, imagen a la derecha (como en login/registro) -->
-      <div class="logo">
-        <img src="../../../assets/h.png" alt="Logo vestidos" class="brand-icon" />
-        <div class="brand-text">
-          <span class="brand-script">Erma Zafe</span>
-          <small>Venta y alquiler<br />de vestido</small>
-        </div>
-      </div>
-  
-      <!-- Título por paso -->
-      @if (step() === 'email') {
-        <h1 class="title">Recuperar contraseña</h1>
-        <p class="subtitle">Te enviaremos un código a tu correo.</p>
-      } @else if (step() === 'code') {
-        <h1 class="title">Verifica tu código</h1>
-        <p class="subtitle">Ingresa el código que te enviamos.</p>
-      } @else {
-        <h1 class="title">Nueva contraseña</h1>
-        <p class="subtitle">Elige una contraseña segura.</p>
-      }
-  
-      @if (error()) { <p class="error">{{ error() }}</p> }
-      @if (info())  { <p class="info">{{ info() }}</p> }
-  
-      <!-- Paso 1: correo -->
-      @if (step() === 'email') {
-        <label class="field">
-          <span>correo</span>
-          <input type="email" placeholder="tucorreo@ejemplo.com"
-                 [value]="email()" (input)="onEmail($event)" />
-        </label>
-  
-        <button class="btn primary" type="button"
-                (click)="sendCode()" [disabled]="loading()">
-          {{ loading() ? 'Enviando…' : 'Enviar código' }}
-        </button>
-      }
-  
-      <!-- Paso 2: código -->
-      @if (step() === 'code') {
-        <label class="field">
-          <span>código</span>
-          <input type="text" placeholder="123456"
-                 [value]="code()" (input)="onCode($event)" />
-        </label>
-  
-        <div class="row">
-          <button class="btn ghost" type="button" (click)="backToEmail()">← Cambiar correo</button>
-          <button class="btn primary" type="button"
-                  (click)="verifyCode()" [disabled]="loading()">
-            {{ loading() ? 'Verificando…' : 'Verificar' }}
-          </button>
-        </div>
-      }
-  
-      <!-- Paso 3: nueva contraseña -->
-      @if (step() === 'reset') {
-        <label class="field">
-          <span>nueva contraseña</span>
-          <input type="password" placeholder="********"
-                 [value]="pass()" (input)="onPass($event)" />
-        </label>
-  
-        <label class="field">
-          <span>confirmar contraseña</span>
-          <input type="password" placeholder="********"
-                 [value]="confirm()" (input)="onConfirm($event)" />
-        </label>
-  
-        <div class="row">
-          <button class="btn ghost" type="button" (click)="backToCode()">← Volver</button>
-          <button class="btn primary" type="button"
-                  (click)="resetPassword()" [disabled]="loading()">
-            {{ loading() ? 'Actualizando…' : 'Actualizar' }}
-          </button>
-        </div>
-      }
-  
-      <div class="links">
-        <a routerLink="/login">Volver a iniciar sesión</a>
+  <div class="card">
+    <div class="logo">
+      <img src="assets/h.png" alt="Logo vestidos" class="brand-icon" />
+      <div class="brand-text">
+        <span class="brand-script">Erma Zafe</span>
+        <small>Venta y alquiler<br />de vestido</small>
       </div>
     </div>
-  </section>
+
+    @if (step() === 'email') {
+      <h1 class="title">Recuperar contraseña</h1>
+      <p class="subtitle">Te enviaremos un código a tu correo.</p>
+    } @else if (step() === 'code') {
+      <h1 class="title">Verifica tu código</h1>
+      <p class="subtitle">Ingresa el código que te enviamos.</p>
+    } @else {
+      <h1 class="title">Nueva contraseña</h1>
+      <p class="subtitle">Elige una contraseña segura.</p>
+    }
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+    @if (info())  { <p class="info">{{ info() }}</p> }
+
+    @if (step() === 'email') {
+      <label class="field">
+        <span>correo</span>
+        <input type="email" placeholder="tucorreo@ejemplo.com"
+               [value]="email()" (input)="onEmail($event)" />
+      </label>
+      <button class="btn primary" type="button"
+              (click)="sendCode()" [disabled]="loading()">
+        {{ loading() ? 'Enviando…' : 'Enviar código' }}
+      </button>
+    }
+
+    @if (step() === 'code') {
+      <label class="field">
+        <span>código</span>
+        <input type="text" placeholder="123456"
+               [value]="code()" (input)="onCode($event)" />
+      </label>
+      <div class="row">
+        <button class="btn ghost" type="button" (click)="backToEmail()">← Cambiar correo</button>
+        <button class="btn primary" type="button"
+                (click)="verifyCode()" [disabled]="loading()">
+          {{ loading() ? 'Verificando…' : 'Verificar' }}
+        </button>
+      </div>
+    }
+
+    @if (step() === 'reset') {
+      <label class="field">
+        <span>nueva contraseña</span>
+        <input type="password" placeholder="********"
+               [value]="pass()" (input)="onPass($event)" />
+      </label>
+      <label class="field">
+        <span>confirmar contraseña</span>
+        <input type="password" placeholder="********"
+               [value]="confirm()" (input)="onConfirm($event)" />
+      </label>
+      <div class="row">
+        <button class="btn ghost" type="button" (click)="backToCode()">← Volver</button>
+        <button class="btn primary" type="button"
+                (click)="resetPassword()" [disabled]="loading()">
+          {{ loading() ? 'Actualizando…' : 'Actualizar' }}
+        </button>
+      </div>
+    }
+
+    <div class="links">
+      <a routerLink="/login">Volver a iniciar sesión</a>
+    </div>
+  </div>
+</section>

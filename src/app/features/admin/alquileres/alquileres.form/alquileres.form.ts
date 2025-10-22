@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
@@ -16,11 +16,9 @@ export interface Alquiler {
 
 @Component({
   selector: 'app-alquileres-form',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './alquileres.form.html',
-  styleUrls: ['./alquileres.form.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./alquileres.form.scss']
 })
 export class AlquileresForm implements OnInit {
   alquilerForm!: FormGroup;
@@ -49,7 +47,7 @@ export class AlquileresForm implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    @Optional() public dialogRef: DialogRef<Partial<Alquiler> | undefined>,  // ← CORREGIDO
+    @Optional() public dialogRef: DialogRef<Partial<Alquiler> | undefined>,
     @Optional() @Inject(DIALOG_DATA) public data: { alquiler: Alquiler | null }
   ) {}
 
@@ -74,7 +72,8 @@ export class AlquileresForm implements OnInit {
     });
   }
 
-  onVestidoChange(vestidoNombre: string): void {
+  onVestidoChange(e: Event): void {
+    const vestidoNombre = (e.target as HTMLSelectElement).value;
     const vestidoSeleccionado = this.vestidos.find(v => v.nombre === vestidoNombre);
     if (vestidoSeleccionado) {
       this.alquilerForm.patchValue({ precio: vestidoSeleccionado.precio });

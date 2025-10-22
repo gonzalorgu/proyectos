@@ -20,7 +20,6 @@ export interface Alquiler {
 
 @Component({
   selector: 'app-alquileres',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './alquileres.html',
   styleUrls: ['./alquileres.scss']
@@ -134,18 +133,18 @@ export class Alquileres implements OnInit {
     this.alquileresFiltrados.set(resultado);
   }
 
-  onSearchChange(value: string): void {
-    this.searchTerm.set(value);
+  onSearchChange(e: Event): void {
+    this.searchTerm.set((e.target as HTMLInputElement).value);
     this.aplicarFiltros();
   }
 
-  onFiltroEstadoChange(value: string): void {
-    this.filtroEstado.set(value);
+  onFiltroEstadoChange(e: Event): void {
+    this.filtroEstado.set((e.target as HTMLSelectElement).value);
     this.aplicarFiltros();
   }
 
-  onOrdenChange(value: 'fecha' | 'cliente' | 'estado'): void {
-    this.ordenPor.set(value);
+  onOrdenChange(e: Event): void {
+    this.ordenPor.set((e.target as HTMLSelectElement).value as 'fecha' | 'cliente' | 'estado');
     this.aplicarFiltros();
   }
 
@@ -196,7 +195,8 @@ export class Alquileres implements OnInit {
     });
   }
 
-  cambiarEstado(alquiler: Alquiler, nuevoEstado: Alquiler['estado']): void {
+  cambiarEstado(alquiler: Alquiler, e: Event): void {
+    const nuevoEstado = (e.target as HTMLSelectElement).value as Alquiler['estado'];
     this.rows.update(lista =>
       lista.map(a => a.id === alquiler.id ? { ...a, estado: nuevoEstado } : a)
     );
@@ -213,11 +213,6 @@ export class Alquileres implements OnInit {
   getEstadoColor(estado: string): string {
     const estadoObj = this.estadosDisponibles.find(e => e.value === estado);
     return estadoObj?.color || '#6c757d';
-  }
-
-  getEstadoLabel(estado: string): string {
-    const estadoObj = this.estadosDisponibles.find(e => e.value === estado);
-    return estadoObj?.label || estado;
   }
 
   calcularDias(desde: string, hasta: string): number {

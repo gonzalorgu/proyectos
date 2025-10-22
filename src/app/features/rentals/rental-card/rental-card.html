@@ -1,7 +1,7 @@
 @if (r) {
   <article class="card">
     <div class="imgwrap">
-      <img [src]="r.foto || '../../../../assets/2.jpg'" [alt]="r.dressNombre" />
+      <img [src]="r.foto || 'assets/2.jpg'" [alt]="r.dressNombre" />
     </div>
 
     <div class="content">
@@ -12,27 +12,22 @@
         </span>
       </header>
 
-      <!-- ✅ Orden actualizado: Recogida, Talla, Devolución, Precio -->
       <div class="info-grid">
-        <!-- Recogida -->
         <div class="info-item">
           <dt>Recogida</dt>
           <dd>{{ r.desde | date:'MMM dd, y' }}</dd>
         </div>
 
-        <!-- ✅ Talla primero -->
         <div class="info-item">
           <dt>Talla</dt>
           <dd>{{ r.talla || '—' }}</dd>
         </div>
 
-        <!-- Devolución -->
         <div class="info-item">
           <dt>Devolución</dt>
           <dd>{{ r.hasta | date:'MMM dd, y' }}</dd>
         </div>
 
-        <!-- ✅ Precio después -->
         <div class="info-item">
           <dt>Precio</dt>
           <dd>S/ {{ r.precioAlquiler }}</dd>

@@ -7,6 +7,4 @@ import { RouterLink } from '@angular/router';
   templateUrl: './cta.html',
   styleUrl: './cta.scss'
 })
-export class Cta {
-
-}
+export class Cta {}

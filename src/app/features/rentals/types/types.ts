@@ -5,10 +5,10 @@ export interface Rental {
   dressId: string;
   dressNombre: string;
   foto: string;
-  desde: string;            // ISO date (YYYY-MM-DD)
-  hasta: string;            // ISO date
+  desde: string;            
+  hasta: string;            
   precioAlquiler: number;
-  estado?: EstadoRental;    // opcional: si no viene, se calcula por fecha
+  estado?: EstadoRental;    
   talla?: string;
   color?: string;
 }

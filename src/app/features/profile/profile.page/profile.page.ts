@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { ProfileStore, TallaPref } from '../profile.store/profile.store';
 import { CommonModule } from '@angular/common';
+import { ProfileStore, TallaPref } from '../profile.store/profile.store';
 
 @Component({
   selector: 'app-profile.page',
@@ -11,39 +11,69 @@ import { CommonModule } from '@angular/common';
 export class ProfilePage {
   store = inject(ProfileStore);
 
-  // opciones tipadas para iterar en la vista (evita "string" genérico)
   readonly tallas: ReadonlyArray<TallaPref> = ['S', 'M', 'L', 'XL'] as const;
 
-  // Señales locales de contraseña
   passActual = signal('');
-  passNueva  = signal('');
+  passNueva = signal('');
   passRepite = signal('');
 
-  // -------- Handlers (sin casts en el HTML) --------
-  onNombre(e: Event){ this.store.setCampo('nombre',   (e.target as HTMLInputElement).value); }
-  onApellidos(e: Event){ this.store.setCampo('apellidos',(e.target as HTMLInputElement).value); }
-  onEmail(e: Event){ this.store.setCampo('email',     (e.target as HTMLInputElement).value); }
-  onTelefono(e: Event){ this.store.setCampo('telefono',(e.target as HTMLInputElement).value); }
-  onDocumento(e: Event){ this.store.setCampo('documento',(e.target as HTMLInputElement).value); }
+  onNombre(e: Event) {
+    this.store.setCampo('nombre', (e.target as HTMLInputElement).value);
+  }
 
-  onTalla(t: TallaPref){ this.store.setTallaPref(t); }
+  onApellidos(e: Event) {
+    this.store.setCampo('apellidos', (e.target as HTMLInputElement).value);
+  }
 
-  onPassActual(e: Event){ this.passActual.set((e.target as HTMLInputElement).value); }
-  onPassNueva(e: Event){ this.passNueva.set((e.target as HTMLInputElement).value); }
-  onPassRepite(e: Event){ this.passRepite.set((e.target as HTMLInputElement).value); }
+  onEmail(e: Event) {
+    this.store.setCampo('email', (e.target as HTMLInputElement).value);
+  }
+
+  onTelefono(e: Event) {
+    this.store.setCampo('telefono', (e.target as HTMLInputElement).value);
+  }
+
+  onDocumento(e: Event) {
+    this.store.setCampo('documento', (e.target as HTMLInputElement).value);
+  }
+
+  onTalla(t: TallaPref) {
+    this.store.setTallaPref(t);
+  }
+
+  onPassActual(e: Event) {
+    this.passActual.set((e.target as HTMLInputElement).value);
+  }
+
+  onPassNueva(e: Event) {
+    this.passNueva.set((e.target as HTMLInputElement).value);
+  }
+
+  onPassRepite(e: Event) {
+    this.passRepite.set((e.target as HTMLInputElement).value);
+  }
 
   onPickAvatar(e: Event) {
     const file = (e.target as HTMLInputElement).files?.[0];
     if (!file) return;
+
     const fr = new FileReader();
     fr.onload = () => this.store.setAvatar(String(fr.result));
     fr.readAsDataURL(file);
   }
-  limpiarAvatar(){ this.store.setAvatar(null); }
 
-  guardarDatos(){ this.store.guardarCambios(); }
-  guardarPassword(){
+  limpiarAvatar() {
+    this.store.setAvatar(null);
+  }
+
+  guardarDatos() {
+    this.store.guardarCambios();
+  }
+
+  guardarPassword() {
     this.store.actualizarPassword(this.passActual(), this.passNueva(), this.passRepite());
-    this.passActual.set(''); this.passNueva.set(''); this.passRepite.set('');
+    this.passActual.set('');
+    this.passNueva.set('');
+    this.passRepite.set('');
   }
 }

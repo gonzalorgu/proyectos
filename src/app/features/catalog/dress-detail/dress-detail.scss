@@ -1,6 +1,11 @@
 /* Layout principal */
+:host{
+  display: block;
+  padding-top: 90px;
+}
+
 .wrap { 
-  max-width: 1400px; 
+  max-width: 1200px; 
   margin: 1.2rem auto 2.2rem; 
   padding: 0 1rem; 
 }

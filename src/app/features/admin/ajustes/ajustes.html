@@ -1,34 +1,33 @@
-<!-- src/app/features/admin/ajustes/ajustes.html -->
 <section class="panel">
-    <h2>Ajustes de negocio</h2>
-  
-    <label class="field">
-      <span>Nombre de la tienda</span>
-      <input
-        type="text"
-        [value]="nombre()"
-        (input)="nombre.set($any($event.target).value)" />
-    </label>
-  
-    <label class="field">
-      <span>Correo de contacto</span>
-      <input
-        type="email"
-        [value]="correo()"
-        (input)="correo.set($any($event.target).value)" />
-    </label>
-  
-    <label class="field">
-      <span>Teléfono</span>
-      <input
-        type="tel"
-        [value]="telefono()"
-        (input)="telefono.set($any($event.target).value)" />
-    </label>
-  
-    <button class="btn" type="button" (click)="guardar()">Guardar cambios</button>
-  
-    @if (msg()) {
-      <p class="ok">{{ msg() }}</p>
-    }
-  </section>
+  <h2>Ajustes de negocio</h2>
+
+  <label class="field">
+    <span>Nombre de la tienda</span>
+    <input
+      type="text"
+      [value]="nombre()"
+      (input)="onNombre($event)" />
+  </label>
+
+  <label class="field">
+    <span>Correo de contacto</span>
+    <input
+      type="email"
+      [value]="correo()"
+      (input)="onCorreo($event)" />
+  </label>
+
+  <label class="field">
+    <span>Teléfono</span>
+    <input
+      type="tel"
+      [value]="telefono()"
+      (input)="onTelefono($event)" />
+  </label>
+
+  <button class="btn" type="button" (click)="guardar()">Guardar cambios</button>
+
+  @if (msg()) {
+    <p class="ok">{{ msg() }}</p>
+  }
+</section>

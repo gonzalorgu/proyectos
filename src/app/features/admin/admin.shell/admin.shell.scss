@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600;700;800;900&display=swap');
 
 :root {
   --background-color: white;
@@ -30,10 +30,7 @@ body {
 
 .dropdown-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: 199;
   background: transparent;
 }
@@ -53,11 +50,9 @@ header {
   .left {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 1.4rem;
 
     .menu-container {
-      height: 100%;
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -94,13 +89,8 @@ header {
 
     .brand {
       display: flex;
-      justify-content: center;
       align-items: center;
       gap: 0.6rem;
-
-      .logo {
-        width: 1.7rem;
-      }
 
       .name {
         font-size: 1.5rem;
@@ -112,7 +102,6 @@ header {
 
   .right {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 1.6rem;
 
@@ -122,8 +111,8 @@ header {
 
     button {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       border-radius: 0.5rem;
       transition: background-color 0.2s ease;
       position: relative;
@@ -389,7 +378,6 @@ header {
   }
 }
 
-// ✅ MAIN - SOLO UNA VEZ, SIN DUPLICADOS
 main {
   margin-top: 4rem;
   margin-left: 4rem;

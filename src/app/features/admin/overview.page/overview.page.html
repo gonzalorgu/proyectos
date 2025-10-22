@@ -1,31 +1,35 @@
 <section class="grid">
-    @for (s of stats(); track s.label) {
-      <div class="panel stat">
-        <div class="value">{{ s.value }}</div>
-        <div class="label">{{ s.label }}</div>
-        <div class="hint">{{ s.hint }}</div>
+  @for (s of stats(); track s.label) {
+    <div class="panel stat">
+      <div class="value">{{ s.value }}</div>
+      <div class="label">{{ s.label }}</div>
+      <div class="hint">{{ s.hint }}</div>
+    </div>
+  }
+
+  <div class="panel table">
+    <div class="table-head">
+      <h3>Alquileres recientes</h3>
+      <a routerLink="/admin/alquileres">Ver todo →</a>
+    </div>
+
+    <div class="t-row t-head">
+      <div>ID</div><div>Cliente</div><div>Fecha</div><div>Estado</div>
+    </div>
+
+    @for (r of recientes(); track r.id) {
+      <div class="t-row">
+        <div>{{ r.id }}</div>
+        <div>{{ r.cliente }}</div>
+        <div>{{ r.fecha }}</div>
+        <div>
+          <span class="badge"
+                [class.ok]="r.estado === 'Activo'"
+                [class.warn]="r.estado === 'Pendiente'">
+            {{ r.estado }}
+          </span>
+        </div>
       </div>
     }
-  
-    <div class="panel table">
-      <div class="table-head">
-        <h3>Alquileres recientes</h3>
-        <a routerLink="/admin/alquileres">Ver todo →</a>
-      </div>
-  
-      <div class="t-row t-head">
-        <div>ID</div><div>Cliente</div><div>Fecha</div><div>Estado</div>
-      </div>
-  
-      @for (r of recientes(); track r.id) {
-        <div class="t-row">
-          <div>{{ r.id }}</div>
-          <div>{{ r.cliente }}</div>
-          <div>{{ r.fecha }}</div>
-          <div><span class="badge"
-                     [class.ok]="r.estado==='Activo'"
-                     [class.warn]="r.estado==='Pendiente'">{{ r.estado }}</span></div>
-        </div>
-      }
-    </div>
-  </section>
+  </div>
+</section>
