@@ -10,3 +10,7 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_VERSION = "10"
+
+# Deshabilitar el plugin de Angular Runtime
+[functions]
+  external_node_modules = []
