@@ -1,26 +1,20 @@
-import { Component, OnInit, signal, inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Dialog } from '@angular/cdk/dialog';
 import { VestidosForm } from '../vestidos.form/vestidos.form';
 import { VestidosList } from '../vestidos.list/vestidos.list';
 import { VestidosStore, Vestido } from '../vestidos.store/vestidos.store';
 
 @Component({
   selector: 'app-vestidos-page',
-  standalone: true,
-  imports: [CommonModule, VestidosForm, VestidosList],
+  imports: [CommonModule, VestidosList],
   templateUrl: './vestidos.page.html',
-  styleUrls: ['./vestidos.page.scss'],
-  encapsulation: ViewEncapsulation.Emulated 
-
+  styleUrls: ['./vestidos.page.scss']
 })
 export class VestidosPage implements OnInit {
-  // Usar inject() en lugar de constructor para evitar el error de inicialización
   private store = inject(VestidosStore);
+  private dialog = inject(Dialog);
   
-  showForm = signal(false);
-  editingVestido = signal<Vestido | undefined>(undefined);
-
-  // Ahora store ya está inicializado
   vestidos = this.store.vestidos;
   loading = this.store.loading;
 
@@ -31,7 +25,6 @@ export class VestidosPage implements OnInit {
   loadVestidos(): void {
     this.store.setLoading(true);
     
-    // Simulación de carga desde API
     setTimeout(() => {
       const mockVestidos: Vestido[] = [
         {
@@ -61,40 +54,44 @@ export class VestidosPage implements OnInit {
     }, 1000);
   }
 
-  toggleForm(): void {
-    this.showForm.update(show => !show);
-    if (!this.showForm()) {
-      this.editingVestido.set(undefined);
-    }
-  }
+  abrirModalNuevo(): void {
+    const dialogRef = this.dialog.open(VestidosForm, {
+      width: '700px',
+      maxWidth: '90vw',
+      panelClass: 'vestido-modal',
+      data: { vestido: null }
+    });
 
-  onSubmitVestido(vestidoData: Partial<Vestido>): void {
-    if (this.editingVestido()) {
-      this.store.updateVestido(this.editingVestido()!.id, vestidoData);
-    } else {
-      const newVestido: Vestido = {
-        ...vestidoData as Vestido,
-        id: Date.now()
-      };
-      this.store.addVestido(newVestido);
-    }
-    
-    this.showForm.set(false);
-    this.editingVestido.set(undefined);
-  }
-
-  onCancelForm(): void {
-    this.showForm.set(false);
-    this.editingVestido.set(undefined);
+    dialogRef.closed.subscribe((result) => {
+      if (result) {
+        const newVestido: Vestido = {
+          ...result as Vestido,
+          id: Date.now()
+        };
+        this.store.addVestido(newVestido);
+      }
+    });
   }
 
   onEditVestido(vestido: Vestido): void {
-    this.editingVestido.set(vestido);
-    this.showForm.set(true);
+    const dialogRef = this.dialog.open(VestidosForm, {
+      width: '700px',
+      maxWidth: '90vw',
+      panelClass: 'vestido-modal',
+      data: { vestido }
+    });
+
+    dialogRef.closed.subscribe((result) => {
+      if (result) {
+        this.store.updateVestido(vestido.id, result);
+      }
+    });
   }
 
   onDeleteVestido(id: number): void {
-    this.store.removeVestido(id);
+    if (confirm('¿Estás seguro de eliminar este vestido?')) {
+      this.store.removeVestido(id);
+    }
   }
 
   onToggleDisponible(vestido: Vestido): void {

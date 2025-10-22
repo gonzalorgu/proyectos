@@ -1,112 +1,65 @@
-import { Component, input, output, model, effect, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, Inject, OnInit, Optional, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
+
+export interface ReservationData {
+  dressId: number;
+  dressName: string;
+  dressPrice: number;
+  purchaseType: 'venta' | 'alquiler';
+}
 
 @Component({
   selector: 'app-reservation-dialog',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './reservation-dialog.html',
   styleUrls: ['./reservation-dialog.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReservationDialog {
-  isOpen = model<boolean>(false);
-  dressData = input<any>();
-  purchaseType = input<'venta' | 'alquiler'>('alquiler'); // ✅ Nuevo
-  
-  onConfirm = output<any>();
-  onCancel = output<void>();
-
-  reservationForm: FormGroup;
+export class ReservationDialog implements OnInit {
+  reservationForm!: FormGroup;
   minDate = new Date().toISOString().split('T')[0];
 
-  private isLocked = false;
-  private scrollY = 0;
+  constructor(
+    private fb: FormBuilder,
+    @Optional() public dialogRef: DialogRef<any>,
+    @Optional() @Inject(DIALOG_DATA) public data: ReservationData
+  ) {}
 
-  // ✅ Textos dinámicos
-  modalTitle = computed(() => {
-    return this.purchaseType() === 'venta' ? 'Confirmar Compra' : 'Reservar Vestido';
-  });
-
-  confirmButtonText = computed(() => {
-    return this.purchaseType() === 'venta' ? 'Confirmar Compra' : 'Confirmar Reserva';
-  });
-
-  constructor(private fb: FormBuilder) {
+  ngOnInit(): void {
     this.reservationForm = this.fb.group({
-      fechaInicio: this.fb.control('', { validators: [Validators.required], updateOn: 'change' }),
-      fechaFin: this.fb.control('', { validators: [Validators.required], updateOn: 'change' }),
-      nombre: this.fb.control('', { validators: [Validators.required, Validators.minLength(3)], updateOn: 'blur' }),
-      telefono: this.fb.control('', { validators: [Validators.required, Validators.pattern(/^[0-9]{9}$/)], updateOn: 'blur' }),
-      email: this.fb.control('', { validators: [Validators.required, Validators.email], updateOn: 'blur' }),
-      comentarios: this.fb.control('', { updateOn: 'change' })
-    });
-
-    effect((onCleanup) => {
-      const open = this.isOpen();
-      
-      if (open && !this.isLocked) {
-        requestAnimationFrame(() => {
-          this.lockBody();
-        });
-      } else if (!open && this.isLocked) {
-        requestAnimationFrame(() => {
-          this.unlockBody();
-        });
-      }
-
-      onCleanup(() => {
-        if (this.isLocked) {
-          this.unlockBody();
-        }
-      });
+      fechaInicio: ['', Validators.required],
+      fechaFin: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]],
+      email: ['', [Validators.required, Validators.email]],
+      comentarios: ['']
     });
   }
 
-  private lockBody(): void {
-    if (this.isLocked) return;
-    
-    this.scrollY = window.scrollY || window.pageYOffset || 0;
-    
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${this.scrollY}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflowY = 'scroll';
-    
-    this.isLocked = true;
+  get modalTitle(): string {
+    return this.data?.purchaseType === 'venta' ? 'Confirmar Compra' : 'Reservar Vestido';
   }
 
-  private unlockBody(): void {
-    if (!this.isLocked) return;
-    
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflowY = '';
-    
-    window.scrollTo(0, this.scrollY);
-    
-    this.isLocked = false;
+  get confirmButtonText(): string {
+    return this.data?.purchaseType === 'venta' ? 'Confirmar Compra' : 'Confirmar Reserva';
   }
 
   closeModal(): void {
-    this.isOpen.set(false);
-    this.reservationForm.reset();
-    this.onCancel.emit();
+    this.dialogRef?.close(undefined);
   }
 
   onSubmit(): void {
     if (this.reservationForm.valid) {
       const reservationData = {
         ...this.reservationForm.value,
-        vestidoId: this.dressData()?.id,
-        vestidoNombre: this.dressData()?.name,
-        precio: this.dressData()?.price,
-        tipo: this.purchaseType()
+        vestidoId: this.data?.dressId,
+        vestidoNombre: this.data?.dressName,
+        precio: this.data?.dressPrice,
+        tipo: this.data?.purchaseType
       };
-      this.onConfirm.emit(reservationData);
-      this.closeModal();
+      this.dialogRef?.close(reservationData);
     } else {
       Object.keys(this.reservationForm.controls).forEach(key => {
         this.reservationForm.get(key)?.markAsTouched();
@@ -126,5 +79,9 @@ export class ReservationDialog {
   hasError(fieldName: string): boolean {
     const control = this.reservationForm.get(fieldName);
     return !!(control && control.invalid && control.touched);
+  }
+
+  get f() {
+    return this.reservationForm.controls;
   }
 }

@@ -112,10 +112,6 @@
     </div>
   }
 </section>
-<app-reservation-dialog 
-  [(isOpen)]="modalOpen"
-  [dressData]="selectedDressForReservation()"
-  [purchaseType]="purchaseType()"
-  (onConfirm)="handleReservation($event)"
-  (onCancel)="handleCancel()">
-</app-reservation-dialog>
+<button (click)="openReservation()">
+  {{ actionButtonText() }}
+</button>

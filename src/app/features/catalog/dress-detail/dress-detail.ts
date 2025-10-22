@@ -1,53 +1,40 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Dialog } from '@angular/cdk/dialog';
 import { DressCard } from '../dress-card/dress-card';
 import { CatalogStore } from '../catalog.store/catalog.store';
-import { ReservationDialog } from "../reservation-dialog/reservation-dialog";
+import { ReservationDialog } from '../reservation-dialog/reservation-dialog';
 
 @Component({
   selector: 'app-dress-detail',
-  imports: [CommonModule, RouterLink, DressCard, ReservationDialog],
+  imports: [CommonModule, RouterLink, DressCard],
   templateUrl: './dress-detail.html',
   styleUrl: './dress-detail.scss'
 })
 export class DressDetail {
   private route = inject(ActivatedRoute);
   private store = inject(CatalogStore);
+  private dialog = inject(Dialog);
 
   id = signal<string>('');
   dress = computed(() => this.store.byId(this.id()));
   related = computed(() => this.store.relatedTo(this.id(), 4));
 
-  // UI signals
   size = signal<string>('');
   fit = signal<boolean>(false);
   qty = signal<number>(1);
   purchaseType = signal<'venta' | 'alquiler'>('alquiler');
   selectedPhotoIndex = signal<number>(0);
 
-  // Precio dinámico
   currentPrice = computed(() => {
     const d = this.dress();
     if (!d) return 0;
     return this.purchaseType() === 'venta' ? (d.precioVenta || 0) : d.precioAlquiler;
   });
 
-  // Texto dinámico del botón de acción
   actionButtonText = computed(() => {
     return this.purchaseType() === 'venta' ? 'Comprar' : 'Reservar';
-  });
-
-  // Modal
-  modalOpen = signal(false);
-  selectedDressForReservation = computed(() => {
-    const d = this.dress();
-    if (!d) return null;
-    return {
-      id: d.id,
-      name: d.nombre,
-      price: this.currentPrice()
-    };
   });
 
   constructor() {
@@ -97,7 +84,26 @@ export class DressDetail {
   }
 
   openReservation() {
-    this.modalOpen.set(true);
+    const d = this.dress();
+    if (!d) return;
+
+    const dialogRef = this.dialog.open(ReservationDialog, {
+      width: '600px',
+      maxWidth: '90vw',
+      panelClass: 'reservation-modal',
+      data: {
+        dressId: d.id,
+        dressName: d.nombre,
+        dressPrice: this.currentPrice(),
+        purchaseType: this.purchaseType()
+      }
+    });
+
+    dialogRef.closed.subscribe((result) => {
+      if (result) {
+        this.handleReservation(result);
+      }
+    });
   }
 
   handleReservation(data: any) {
@@ -111,9 +117,5 @@ Fecha inicio: ${data.fechaInicio}
 Fecha fin: ${data.fechaFin}
 Email: ${data.email}
 Teléfono: ${data.telefono}`);
-  }
-
-  handleCancel() {
-    console.log('❌ Acción cancelada');
   }
 }

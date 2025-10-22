@@ -1,17 +1,9 @@
 <div class="vestidos-page">
   <div class="page-header">
     <h1>Gestión de Vestidos</h1>
-    <button (click)="toggleForm()" class="btn btn-primary">
-      {{ showForm() ? 'Cancelar' : '+ Nuevo Vestido' }}
+    <button (click)="abrirModalNuevo()" class="btn btn-primary">
+      + Nuevo Vestido
     </button>
-  </div>
-
-  <div *ngIf="showForm()" class="form-section">
-    <app-vestidos-form
-      [vestido]="editingVestido()"
-      (submitForm)="onSubmitVestido($event)"
-      (cancelForm)="onCancelForm()">
-    </app-vestidos-form>
   </div>
 
   <div class="list-section">

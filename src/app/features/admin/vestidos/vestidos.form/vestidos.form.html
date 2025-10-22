@@ -1,8 +1,11 @@
-<div class="modal-overlay">
-  <div class="vestido-form-container">
-    <h3>{{ vestido ? 'Editar Vestido' : 'Nuevo Vestido' }}</h3>
-    
-    <form [formGroup]="vestidoForm" (ngSubmit)="onSubmit()">
+<div class="vestido-form-container">
+  <div class="form-header">
+    <h3>{{ isEditMode ? 'Editar Vestido' : 'Nuevo Vestido' }}</h3>
+    <button class="close-btn" (click)="onCancel()" type="button">✕</button>
+  </div>
+  
+  <form [formGroup]="vestidoForm" (ngSubmit)="onSubmit()">
+    <div class="form-body">
       <div class="form-row">
         <div class="form-group">
           <label for="nombre">Nombre del Vestido *</label>
@@ -24,7 +27,7 @@
             </div>
           }
         </div>
-  
+
         <div class="form-group">
           <label for="categoria">Categoría *</label>
           <select 
@@ -44,7 +47,7 @@
           }
         </div>
       </div>
-  
+
       <div class="form-row">
         <div class="form-group">
           <label for="talla">Talla *</label>
@@ -64,7 +67,7 @@
             </div>
           }
         </div>
-  
+
         <div class="form-group">
           <label for="color">Color *</label>
           <input 
@@ -81,7 +84,7 @@
           }
         </div>
       </div>
-  
+
       <div class="form-row">
         <div class="form-group">
           <label for="precio">Precio de Alquiler *</label>
@@ -105,7 +108,7 @@
             </div>
           }
         </div>
-  
+
         <div class="form-group">
           <label for="imagen">URL de Imagen</label>
           <input 
@@ -116,7 +119,7 @@
             placeholder="https://...">
         </div>
       </div>
-  
+
       <div class="form-group">
         <label for="descripcion">Descripción</label>
         <textarea 
@@ -126,22 +129,22 @@
           rows="3"
           placeholder="Describe las características del vestido..."></textarea>
       </div>
-  
+
       <div class="form-group checkbox-group">
         <label>
           <input type="checkbox" formControlName="disponible">
           Disponible para alquiler
         </label>
       </div>
-  
-      <div class="form-actions">
-        <button type="button" (click)="onCancel()" class="btn btn-secondary">
-          Cancelar
-        </button>
-        <button type="submit" [disabled]="!vestidoForm.valid" class="btn btn-primary">
-          {{ vestido ? 'Actualizar' : 'Guardar' }}
-        </button>
-      </div>
-    </form>
-  </div>
+    </div>
+
+    <div class="form-footer">
+      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+        Cancelar
+      </button>
+      <button type="submit" [disabled]="!vestidoForm.valid" class="btn btn-primary">
+        {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
 </div>

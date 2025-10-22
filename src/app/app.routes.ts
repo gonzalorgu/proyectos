@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { Shell } from './shared/layout/shell/shell';
 import { HomePage } from './features/home/home.page/home.page';
-
 import { CatalogPage } from './features/catalog/catalog.page/catalog.page';
 import { DressDetail } from './features/catalog/dress-detail/dress-detail';
 import { RentalsPage } from './features/rentals/rentals.page/rentals.page';
@@ -17,17 +16,13 @@ import { Usuarios } from './features/admin/usuarios/usuarios';
 import { Reportes } from './features/admin/reportes/reportes';
 import { OverviewPage } from './features/admin/overview.page/overview.page';
 import { Pagos } from './features/admin/pagos/pagos';
-import { ReservationDialog } from './features/catalog/reservation-dialog/reservation-dialog';
-
-
 
 export const routes: Routes = [
-
   {
     path: '',
-    component: Shell,            // Shell debe tener <router-outlet>
+    component: Shell,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' }, // default al iniciar
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomePage },
       { path: 'catalogo', component: CatalogPage },
       { path: 'vestido/:id', component: DressDetail },
@@ -35,29 +30,22 @@ export const routes: Routes = [
       { path: 'perfil', component: ProfilePage },
       { path: 'login', component: LoginPage },
       { path: 'registro', component: RegisterPage },
-      { path: 'recuperar', component: RecoverPage },
-      { path: 'reservar', component: ReservationDialog },
-    ],
+      { path: 'recuperar', component: RecoverPage }
+    ]
   },
- 
   {
     path: 'admin',
     component: AdminShell,
     children: [
-      { path: '', pathMatch: 'full', component: OverviewPage }, 
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
       { path: 'inicio', component: OverviewPage },
       { path: 'ajustes', component: Ajustes },
       { path: 'vestidos', component: VestidosPage },
       { path: 'alquileres', component: Alquileres },
       { path: 'pagos', component: Pagos },
       { path: 'usuarios', component: Usuarios },
-      { path: 'reportes', component: Reportes },
-    ],
+      { path: 'reportes', component: Reportes }
+    ]
   },
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'home' }
 ];
-
-
-
-
-
