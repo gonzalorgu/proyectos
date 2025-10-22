@@ -1,7 +1,6 @@
 [build]
   command = "npm run build"
   publish = "dist/erma-zafe/browser"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF"
 
 [[redirects]]
   from = "/*"
@@ -10,9 +9,3 @@
 
 [build.environment]
   NODE_VERSION = "20"
-
-[[plugins]]
-  package = "@netlify/angular-runtime"
-  
-  [plugins.inputs]
-    disabled = true
