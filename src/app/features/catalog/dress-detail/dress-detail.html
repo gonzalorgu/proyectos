@@ -1,9 +1,9 @@
 <section class="wrap">
   @if (dress()) {
     <div class="top">
-      <!-- ✅ Sección de imágenes con galería de miniaturas -->
+   
       <div class="image-section">
-        <!-- Miniaturas a la izquierda -->
+      
         <div class="thumbnails">
           @for (foto of dress()!.fotos; track $index) {
             <button 
@@ -11,23 +11,22 @@
               class="thumbnail"
               [class.active]="selectedPhotoIndex() === $index"
               (click)="selectPhoto($index)">
-              <img [src]="foto" [alt]="dress()!.nombre + ' - foto ' + ($index + 5)" />
+              <img [src]="foto" [alt]="dress()!.nombre + ' - foto ' + ($index + 1)" />
             </button>
           }
         </div>
 
-        <!-- Imagen principal -->
+      
         <figure class="media">
           <img [src]="dress()!.fotos[selectedPhotoIndex()] || 'assets/placeholder.jpg'"
                [alt]="dress()!.nombre" />
-          <!-- ✅ Botón de zoom (opcional) -->
+  
           <button type="button" class="zoom-btn" aria-label="Ver en tamaño completo">
             <i class="fas fa-search-plus"></i>
           </button>
         </figure>
       </div>
 
-      <!-- Info a la derecha -->
       <div class="info">
         <h1 class="title">{{ dress()!.nombre }}</h1>
 
@@ -47,7 +46,6 @@
           <li>Categoría: {{ dress()!.categoria }}</li>
         </ul>
 
-        <!-- Toggle de Venta/Alquiler -->
         <div class="purchase-type">
           <span class="label-inline">¿Cómo deseas adquirirlo?</span>
           <div class="toggle-buttons">
@@ -68,7 +66,6 @@
           </div>
         </div>
 
-        <!-- Precio dinámico -->
         <div class="price">
           <span class="amount">S/ {{ currentPrice() }}</span>
           <span class="vat">Impuestos incluidos</span>
@@ -92,11 +89,9 @@
             {{ actionButtonText() }}
           </button>
         </div>
+      </div>
     </div>
-  </div>
 
-
-    <!-- Relacionados -->
     <section class="related">
       <h2>También te puede interesar</h2>
       <div class="grid">
@@ -112,6 +107,3 @@
     </div>
   }
 </section>
-<button (click)="openReservation()">
-  {{ actionButtonText() }}
-</button>
