@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component ,inject} from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../servicios/auth.service/auth.service';
 
 @Component({
   selector: 'app-hero',
@@ -9,5 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './hero.scss'
 })
 export class Hero {
-
+  private authService = inject(AuthService);
+  
+  isLoggedIn = this.authService.isLoggedIn;
 }

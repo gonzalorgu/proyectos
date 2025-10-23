@@ -4,7 +4,8 @@
       <span class="logo-text brand-script">Erma Zafe</span>
     </a>
 
-    <nav class="nav">
+    <!-- Navegación desktop -->
+    <nav class="nav desktop-nav">
       <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a>
       <a routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
       
@@ -14,33 +15,74 @@
       }
     </nav>
 
-    @if (isLoggedIn()) {
-      <div class="user-menu">
-        <button class="user-btn" (click)="toggleUserMenu()">
-          <img src="assets/icons/profile-circle-svgrepo-com.svg" alt="Usuario" class="user-avatar">
-          <span>{{ userName() }}</span>
-        </button>
+    <!-- Usuario desktop -->
+    <div class="desktop-user">
+      @if (isLoggedIn()) {
+        <div class="user-menu">
+          <button class="user-btn" (click)="toggleUserMenu()">
+            <img src="assets/icons/profile-circle-svgrepo-com.svg" alt="Usuario" class="user-avatar">
+            <span>{{ userName() }}</span>
+          </button>
 
-        @if (showUserMenu()) {
-          <div class="user-dropdown">
-            <a routerLink="/perfil" (click)="closeUserMenu()">
-              <img src="assets/icons/profile-circle-svgrepo-com.svg" alt="Perfil" class="menu-icon">
-              Mi Perfil
-            </a>
-            <a routerLink="/mis-alquiler" (click)="closeUserMenu()">
-              <img src="assets/icons/woman-fashion-clothes-svgrepo-com.svg" alt="Alquileres" class="menu-icon">
-              Mis Alquileres
-            </a>
-            <div class="divider"></div>
-            <button (click)="logout()">
-              <img src="assets/icons/exit-svgrepo-com.svg" alt="Salir" class="menu-icon">
-              Cerrar Sesión
-            </button>
-          </div>
-        }
-      </div>
-    } @else {
-      <a routerLink="/login" class="btn-login">Iniciar sesión →</a>
-    }
+          @if (showUserMenu()) {
+            <div class="user-dropdown">
+              <a routerLink="/perfil" (click)="closeUserMenu()">
+                <img src="assets/icons/profile-circle-svgrepo-com.svg" alt="Perfil" class="menu-icon">
+                Mi Perfil
+              </a>
+              <a routerLink="/mis-alquiler" (click)="closeUserMenu()">
+                <img src="assets/icons/woman-fashion-clothes-svgrepo-com.svg" alt="Alquileres" class="menu-icon">
+                Mis Alquileres
+              </a>
+              <div class="divider"></div>
+              <button (click)="logout()">
+                <img src="assets/icons/exit-svgrepo-com.svg" alt="Salir" class="menu-icon">
+                Cerrar Sesión
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <a routerLink="/login" class="btn-login">Iniciar sesión</a>
+      }
+    </div>
+
+    <!-- Botón hamburguesa (solo móvil) -->
+    <button class="menu-toggle" (click)="toggleMobileMenu()" aria-label="Menú">
+      <span [class.open]="showMobileMenu()"></span>
+      <span [class.open]="showMobileMenu()"></span>
+      <span [class.open]="showMobileMenu()"></span>
+    </button>
   </div>
 </header>
+
+<!-- Menú móvil desplegable -->
+@if (showMobileMenu()) {
+  <div class="mobile-menu-fullscreen">
+    <nav class="mobile-nav">
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeMobileMenu()">
+        Inicio
+      </a>
+      <a routerLink="/catalogo" routerLinkActive="active" (click)="closeMobileMenu()">
+        Catálogo
+      </a>
+      
+      @if (isLoggedIn()) {
+        <a routerLink="/mis-alquiler" routerLinkActive="active" (click)="closeMobileMenu()">
+          Mis alquileres
+        </a>
+        <a routerLink="/perfil" routerLinkActive="active" (click)="closeMobileMenu()">
+          Mi perfil
+        </a>
+        <div class="divider"></div>
+        <button (click)="logout()" class="logout-btn">
+          Cerrar Sesión
+        </button>
+      } @else {
+        <a routerLink="/login" (click)="closeMobileMenu()" class="login-btn">
+          Iniciar sesión
+        </a>
+      }
+    </nav>
+  </div>
+}

@@ -14,7 +14,9 @@
 
       <div class="ctas">
         <a routerLink="/catalogo" class="btn btn-primary">Ver Catálogo</a>
-        <a routerLink="/mis-alquileres" class="btn btn-ghost">Mis alquileres</a>
+        @if (isLoggedIn()) {
+          <a routerLink="/mis-alquiler" class="btn btn-ghost">Mis alquileres</a>
+        }
       </div>
     </div>
 

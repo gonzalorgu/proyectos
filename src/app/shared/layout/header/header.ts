@@ -14,6 +14,7 @@ export class Header {
   
   scrolled = signal(false);
   showUserMenu = signal(false);
+  showMobileMenu = signal(false);
 
   isLoggedIn = this.authService.isLoggedIn;
   userName = this.authService.userName;
@@ -31,10 +32,19 @@ export class Header {
     this.showUserMenu.set(false);
   }
 
+  toggleMobileMenu() {
+    this.showMobileMenu.update(v => !v);
+  }
+
+  closeMobileMenu() {
+    this.showMobileMenu.set(false);
+  }
+
   logout() {
     if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
       this.authService.logout();
       this.showUserMenu.set(false);
+      this.showMobileMenu.set(false);
       this.router.navigate(['/login']);
     }
   }
